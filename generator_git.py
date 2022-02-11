@@ -111,6 +111,7 @@ def mixer_stimulus(line_of_stimulus, num_for_random, line_of_lined_indexes=20):
 
 global_num_of_dict = input("Напишите число от 1-го до 5-ти: ")
 global_count_of_stimulus = int(input("Напишите количество символов используемых для создания символьного ряда: "))
+# А ведь строчка ниже не нужна, если я не вызываю словарь.
 type_of_letter = int(input("Введите размер буквы: 1 - Большая, 2 - Маленькая: "))
 
 length_st = 50
