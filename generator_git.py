@@ -1,4 +1,10 @@
+
+
+""" Модуль для создания рандомизированных рядов стимулов."""
+
+
 import random
+
 
 """В Функции ниже находятся списки и словари, содержащие необходимые стимулы для создания стимульного ряда."""
 
@@ -121,19 +127,3 @@ def mixer_stimulus(line_of_stimulus, count_of_stimulus, line_of_lined_indexes=20
         end_list.append(indexed_dictionary.get(element)[0])
 
     return end_list
-
-
-global_num_of_dict = input("Напишите число от 1-го до 5-ти: ")
-global_count_of_stimulus = int(input("Напишите количество символов используемых для создания символьного ряда: "))
-# А ведь строчка ниже не нужна, если я не вызываю словарь.
-type_of_letter = int(input("Введите размер буквы: 1 - Большая, 2 - Маленькая: "))
-
-length_st = 50
-stimulus_fin_list = 20
-
-# Функция может вернуть False и тогда программа сляжет.
-chosen_stimulus = n_back_choosing_stimulus(global_num_of_dict, global_count_of_stimulus, type_of_letter)
-print(chosen_stimulus)
-
-end_of_thinking = mixer_stimulus(chosen_stimulus, global_count_of_stimulus, int(stimulus_fin_list))
-print(end_of_thinking)
