@@ -8,9 +8,9 @@
 
 
 def analyzer_n_back(stymulus_line, stimulus_index, interval_to_back):
-    if stimulus_index >= interval_to_back + 1:
-        index_minus_interval = stimulus_index + 1
-        if stymulus_line[index_minus_interval] == stymulus_line[stimulus_index]:
+    if stimulus_index >= int(interval_to_back) + 1:
+        index_minus_interval = int(interval_to_back) + 1
+        if stymulus_line[stimulus_index - index_minus_interval] == stymulus_line[stimulus_index]:
             return True
         else:
             return False
@@ -23,7 +23,9 @@ def analyzer_n_back(stymulus_line, stimulus_index, interval_to_back):
 
 def working_code_reviev(stimulus_randomised_line, interval_n_back):
     list_of_result = []
-    for element in stimulus_randomised_line:
-        check = analyzer_n_back(stimulus_randomised_line, stimulus_randomised_line.index[element],interval_n_back)
-        list_of_result.append(check)
+    index = 0
+    while len(list_of_result) < len(stimulus_randomised_line):
+        result = analyzer_n_back(stimulus_randomised_line, index, interval_n_back)
+        index += 1
+        list_of_result.append(result)
     return list_of_result
