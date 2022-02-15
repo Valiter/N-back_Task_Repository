@@ -1,5 +1,7 @@
 import random
 
+"""В Функции ниже находятся списки и словари, содержащие необходимые стимулы для создания стимульного ряда."""
+
 
 def dictionaries():
 
@@ -29,6 +31,10 @@ def dictionaries():
     return rus_list_for_n_back, eng_dict_for_n_back, num_list_for_n_back, figure_dict_for_n_back, color_dict_for_n_back
 
 
+"""Функция ниже используется в другой функции. Сама функция создает список рандомизированных ключей или элементов, 
+которые будут в дальнейшем использовться для создания уже стимульного ряда."""
+
+
 def choosing_elements(some_list, count_of_stimulus):
     length_of_list = len(some_list)
     random.shuffle(some_list)
@@ -44,6 +50,9 @@ def choosing_elements(some_list, count_of_stimulus):
         return False
 
     return list(keys)
+
+
+"""Функция ниже использует функцию choosing_elements внутри себя. Сама функция создает """
 
 
 def n_back_choosing_stimulus(dict_in, stimulus_in, type_letter):
@@ -75,7 +84,12 @@ def n_back_choosing_stimulus(dict_in, stimulus_in, type_letter):
     return needed_keys_dict or needed_keys_list
 
 
-def mixer_stimulus(line_of_stimulus, num_for_random, line_of_lined_indexes=20):
+"""Функция создает стимульный ряд необходимой длинны. 
+Необходимы выбранные стимулы, количество этих самых символов и длинна стимульного ряда.
+На выходе получается псевдорандомный список стимулов."""
+
+
+def mixer_stimulus(line_of_stimulus, count_of_stimulus, line_of_lined_indexes=20):
 
     def stimulus_index_maker(length, count):
         list_of_stimulus = []
@@ -101,7 +115,7 @@ def mixer_stimulus(line_of_stimulus, num_for_random, line_of_lined_indexes=20):
         index = line_of_stimulus.index(element)
         indexed_dictionary[index + 1] = [element]
 
-    stimulus_index_made = stimulus_index_maker(line_of_lined_indexes, num_for_random)  # Использовать далее!
+    stimulus_index_made = stimulus_index_maker(line_of_lined_indexes, count_of_stimulus)  # Использовать далее!
     end_list = []
     for element in stimulus_index_made:
         end_list.append(indexed_dictionary.get(element)[0])
@@ -122,3 +136,4 @@ chosen_stimulus = n_back_choosing_stimulus(global_num_of_dict, global_count_of_s
 print(chosen_stimulus)
 
 end_of_thinking = mixer_stimulus(chosen_stimulus, global_count_of_stimulus, int(stimulus_fin_list))
+print(end_of_thinking)
