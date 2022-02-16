@@ -11,7 +11,7 @@ wind_screen.geometry("720x480")  # Размер окна.
 lbl = Label(wind_screen, text="Привет", font=("Times New Roman",100))
 # lbl = Label(window, text="Привет", font=("Arial Bold", 50)
 # font= Может передаваться ЛЮБОМУ виджету.
-lbl.grid(column=0, row=0) # если Grid не вызвать, то функция не вызовется.
+lbl.grid(column=0, row=0)  # если Grid не вызвать, то функция не вызовется.
 
 
 """ Добавим кнопку """
