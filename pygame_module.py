@@ -14,7 +14,6 @@ def pygame_func():
     rect = pygame.Rect(20, 20, 50, 70)
     color = (255, 255, 255)
 
-
     # Обработка событий должна происходить ТОЛЬКО в цикле. И это хорошо.
     while True:
         for event in pygame.event.get():
