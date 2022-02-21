@@ -12,8 +12,8 @@ import sys
 figure_dict_for_n_back = {"triangle": "", "sphere": "", "square": "",
                           "circle": "", "pyramid": "", "oval": "", "prism": ""}
 
-color_dict_for_n_back = {"white": "", "red": (255, 0, 0), "green": "", "blue": "",
-                         "yellow": "", "brown": "", "black": "", "orange": ""}
+color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255),
+                         "yellow": (225, 225, 0), "brown": (100, 50, 30), "black": (0, 0, 0), "orange": (255, 100, 25)}
 
 
 def pygame_func():
