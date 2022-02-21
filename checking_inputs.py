@@ -20,14 +20,13 @@ def checking_inputs_func(type_of_symbols_dict, count_of_using_symbols,
         return False
 
     elif type_of_symbols_dict > len(count_of_dictionaties) or type_of_symbols_dict < 1:
-        print("!")
         return False
 
     # Строчка ниже находится на ее месте по той причине, ...
     # Что до нее необходима проверка на длинну и цифру у стимульного списка.
-    count_chosen_dictionary = count_of_dictionaties[type_of_symbols_dict]
+    count_chosen_dictionary = (count_of_dictionaties[type_of_symbols_dict-1])
 
-    #  Проверка ниже не защищает от дурака, но хоть немного спасает от опечаток.
+    # Проверка ниже не защищает от дурака, но хоть немного спасает от опечаток.
     if count_of_using_symbols > len(count_chosen_dictionary):
         return False
 
