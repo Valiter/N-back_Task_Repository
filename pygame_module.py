@@ -32,7 +32,7 @@ def pygame_func():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    color = (0, 0, 0)
+                    color = color_dict_for_n_back["black"]
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
