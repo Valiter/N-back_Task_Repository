@@ -41,4 +41,5 @@ def pygame_func():
         pygame.draw.rect(screen, color, rect, 0)
         pygame.display.flip()
 
+
 pygame_func()
