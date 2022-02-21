@@ -22,6 +22,19 @@ def pygame_func():
     screen = pygame.display.set_mode((640, 480))
     rect = pygame.Rect(20, 20, 50, 70)
     color = color_dict_for_n_back["red"]
+    pygame.draw.circle(screen, color_dict_for_n_back["blue"],
+                       (100, 100), 50)
+    pygame.draw.circle(screen, color_dict_for_n_back["green"],
+                       (200, 100), 50, 10)
+    pygame.draw.polygon(screen, color_dict_for_n_back["white"],
+                        [[150, 10], [180, 50],
+                         [90, 90], [30, 30]])
+    pygame.draw.polygon(screen, color_dict_for_n_back["orange"],
+                        [[250, 110], [280, 150],
+                         [190, 190], [130, 130]])
+    pygame.draw.aalines(screen, color_dict_for_n_back["brown"], True,
+                        [[250, 110], [280, 150],
+                         [190, 190], [130, 130]])
 
     # Обработка событий должна происходить ТОЛЬКО в цикле.
     while True:
