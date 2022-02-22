@@ -21,6 +21,7 @@ interval = input("напишите длинну интервала. 1-back (11),
 
 stimulus_fin_list = 20
 
+
 while switch is True:
     if checking_inputs.checking_inputs_func(int(global_num_of_dict), int(global_count_of_stimulus),
                                             int(interval), int(stimulus_fin_list), int(type_of_letter)) is True:
