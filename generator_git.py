@@ -30,7 +30,7 @@ def dictionaries():
 
     num_list_for_n_back = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 
-    figure_dict_for_n_back = ["triangle", "sphere", "square", "circle", "pyramid", "oval", "prism"]
+    figure_dict_for_n_back = ["triangle_up", "square", "circle", "oval", "prism", "triangle_down"]
 
     color_dict_for_n_back = ["white", "red", "green", "blue", "yellow", "brown", "black", "orange", "beige"]
 
