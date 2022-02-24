@@ -32,7 +32,7 @@ def dictionaries():
 
     figure_dict_for_n_back = ["triangle", "sphere", "square", "circle", "pyramid", "oval", "prism"]
 
-    color_dict_for_n_back = ["white", "red", "green", "blue", "yellow", "brown", "black", "orange"]
+    color_dict_for_n_back = ["white", "red", "green", "blue", "yellow", "brown", "black", "orange", "beige"]
 
     return rus_list_for_n_back, eng_dict_for_n_back, num_list_for_n_back, figure_dict_for_n_back, color_dict_for_n_back
 
