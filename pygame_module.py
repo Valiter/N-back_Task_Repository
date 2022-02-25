@@ -22,37 +22,31 @@ color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": 
                          "beige": (237, 211, 156)}
 
 
+"""Ниже находится функция 'игры' N-Back. Вывод картинки и регистрация нажатий."""
+
+
 def pygame_func():
+
+    # list_of_tips = []
+    changing_picture = False
 
     def quit_pygame():
         pygame.quit()
         sys.exit()
 
-    def change_pict():
-        print("Pict had been chanched... Maybe.")
+    def pict_manager():
 
-    def timer_of_showing():
-        pygame.time.set_timer(pygame.K_SPACE, 3000)
-        print("!")
-
-    list_of_tips = []
+        if changing_picture is True:
+            print(changing_picture)
+            changing_picture is False
+            print(changing_picture)
 
     pygame.init()
 
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    clock = pygame.time.Clock()
+    # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    screen = pygame.display.set_mode((720, 480))
     window_size = pygame.display.get_window_size()
-
-    position = [[window_size[0] / 2, window_size[1] / 2 - 150],
-                [window_size[0] / 2 - 100, window_size[1] / 2 + 100],
-                [window_size[0] / 2 + 100, window_size[1] / 2 + 100]]
-
-    pygame.draw.polygon(screen, color_dict_for_n_back['green'], position)
-
-    pygame.draw.circle(screen, color_dict_for_n_back["orange"],
-                       [window_size[0] / 2, window_size[1] / 2], 60)
-
-    pygame.draw.lines(screen, color_dict_for_n_back['white'], False, [[0, 0], [2560, 1440]])
-    pygame.draw.lines(screen, color_dict_for_n_back['white'], False, [[2560, 0], [0, 1440]])
 
 
 #  Обработка событий должна происходить в цикле.
@@ -63,8 +57,6 @@ def pygame_func():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    #  Сделать добавление реации. Нужно подумать побольше над этим.
-                    #  list_of_tips.append()
                     pass
 
                 if event.key == pygame.K_ESCAPE:
@@ -74,11 +66,12 @@ def pygame_func():
                 if event.key == pygame.K_SPACE:
                     pass
 
-        timer_of_showing()
+            if pygame.event.get(changing_picture):
+                pass
 
+
+        pict_manager()
         pygame.display.update()
-
-    return list_of_tips
 
 
 pygame_func()
