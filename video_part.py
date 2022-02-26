@@ -1,3 +1,8 @@
+
+
+"""Данный модуль является модулем-экспериментом для создания работающей программы."""
+
+
 import pygame
 import sys
 
@@ -28,7 +33,7 @@ def check_func():
                 sys.exit()
 
             if True:
-                pygame.time.set_timer(pict_changer, 1000, False)
+                pygame.time.set_timer(pict_changer, 1000)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:

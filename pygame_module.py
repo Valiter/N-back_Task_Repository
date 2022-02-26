@@ -13,6 +13,8 @@ import time
 
 #  Подозреваю, что словарь с фигурами тут не нужен... Или нужно как-то это переработать.
 #  Может только позиционирование прописать надо? Непонятно.
+#  Вообще, можно вызывать функции!!! Это клево. Например, можно вызывать необходимую хрень, ...
+#  Которая будет делать что мне надо.
 figure_dict_for_n_back = {"triangle_up": "", "square": "",
                           "circle": "", "oval": "",
                           "prism": "", "triangle_down": ""}
@@ -23,55 +25,72 @@ color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": 
 
 
 """Ниже находится функция 'игры' N-Back. Вывод картинки и регистрация нажатий."""
+#  Необходимо сделать:
+#      1) Вывод картинки.
+#      2) Регистрацию нажатий в список и получение этого списка через return.
+#      3) Реализовать как-то остслеживание времени? Вопрос.
+#      4) Стоит подумать над тем, что именно опрокидывать в функцию.
 
 
-def pygame_func():
+def pict_and_react():
 
-    # list_of_tips = []
-    changing_picture = False
-
-    def quit_pygame():
-        pygame.quit()
-        sys.exit()
-
-    def pict_manager():
-
-        if changing_picture is True:
-            print(changing_picture)
-            changing_picture is False
-            print(changing_picture)
+    """Инициализируем pygame"""
 
     pygame.init()
 
+    """Ниже будут функции"""
+
+    #  Функция выхода из программы.
+    def quit_func():
+        pygame.quit()
+        sys.exit()
+
+    #  Функция смены картинки.
+    def change_stimul():
+        print('f')
+
+    """Ниже будут переменные и созданные события"""
+
+    #  Переменные.
+    time_in_mill_sec = 1000
+    tick_rate = 30
+    start_testing = False
+
+    #  Созданные события.
+    change_event = pygame.event.Event(pygame.USEREVENT)
     clock = pygame.time.Clock()
-    # screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    screen = pygame.display.set_mode((720, 480))
-    window_size = pygame.display.get_window_size()
 
+    """Ниже находится цикл для обработки событий"""
 
-#  Обработка событий должна происходить в цикле.
     while True:
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
-                quit_pygame()
+                quit_func()
+
+            if start_testing is True:
+                pygame.time.set_timer(change_event, time_in_mill_sec, True)
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    pass
-
                 if event.key == pygame.K_ESCAPE:
-                    quit_pygame()
+                    quit_func()
 
-            if event.type == pygame.KEYUP:
                 if event.key == pygame.K_SPACE:
-                    pass
+                    if start_testing is False:
+                        start_testing = True
+                    else:
+                        print('s')
 
-            if pygame.event.get(changing_picture):
-                pass
+            if event.type == pygame.USEREVENT:
+                change_stimul()
+
+        clock.tick(tick_rate)
 
 
-        pict_manager()
-        pygame.display.update()
+
+    """Возвращаем информацию"""
+
+    return None
 
 
-pygame_func()
+pict_and_react()
