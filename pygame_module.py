@@ -36,6 +36,25 @@ def pict_and_react(time_for_showing):
 
     pygame.init()
 
+    """Ниже будут переменные и созданные события"""
+
+    #  Объявляем размер окна.
+    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+
+    #  Переменные.
+    time_in_mill_sec = time_for_showing * 1000
+    color = 0
+    screen_info = pygame.display.get_window_size()
+    length = screen_info[0]
+    height = 0
+
+    tick_rate = 30
+    start_testing = False
+
+    #  Созданные события.
+    change_event = pygame.event.Event(pygame.USEREVENT)
+    clock = pygame.time.Clock()
+
     """Ниже будут функции"""
 
     #  Функция выхода из программы.
@@ -44,20 +63,9 @@ def pict_and_react(time_for_showing):
         sys.exit()
 
     #  Функция смены картинки.
-    def change_stimulus():
-        pass
-
-    """Ниже будут переменные и созданные события"""
-
-    #  Переменные.
-    time_in_mill_sec = time_for_showing * 1000
-
-    tick_rate = 30
-    start_testing = False
-
-    #  Созданные события.
-    change_event = pygame.event.Event(pygame.USEREVENT)
-    clock = pygame.time.Clock()
+    def change_stimulus(height):
+        pygame.draw.line(screen, color_dict_for_n_back['white'],
+                         [length, height], [0, height])
 
     """Ниже находится цикл для обработки событий"""
 
@@ -81,9 +89,12 @@ def pict_and_react(time_for_showing):
                         print('s')
 
             if event.type == pygame.USEREVENT:
-                change_stimulus()
+                change_stimulus(height)
+                height += 1
 
+        pygame.display.update()
         clock.tick(tick_rate)
+
 
     """Возвращаем информацию"""
 
