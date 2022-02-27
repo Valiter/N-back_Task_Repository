@@ -42,7 +42,7 @@ def pict_and_react(time_for_showing):
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     #  Переменные.
-    time_in_mill_sec = time_for_showing * 1000
+    time_in_mill_sec = time_for_showing * 500
     color = 0
     screen_info = pygame.display.get_window_size()
     length = screen_info[0]
@@ -63,9 +63,9 @@ def pict_and_react(time_for_showing):
         sys.exit()
 
     #  Функция смены картинки.
-    def change_stimulus(height__inside_func):
+    def change_stimulus(height_inside_func):
         pygame.draw.line(screen, color_dict_for_n_back['white'],
-                         [length, height__inside_func], [0, height__inside_func])
+                         [length, height_inside_func], [0, height_inside_func])
 
     """Ниже находится цикл для обработки событий"""
 
@@ -86,7 +86,8 @@ def pict_and_react(time_for_showing):
                     if start_testing is False:
                         start_testing = True
                     else:
-                        print('s')
+                        pygame.draw.line(screen, color_dict_for_n_back['white'],
+                                         [length, screen_info[1] - height], [0, screen_info[1] - height])
 
             if event.type == pygame.USEREVENT:
                 change_stimulus(height)
@@ -100,4 +101,4 @@ def pict_and_react(time_for_showing):
     return None
 
 
-pict_and_react(3)
+pict_and_react(1)
