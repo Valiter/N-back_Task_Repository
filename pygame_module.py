@@ -5,8 +5,6 @@
 
 import pygame
 import sys
-import time
-
 
 '''Нижу находятся словари-расшифровщики'''
 
@@ -32,7 +30,7 @@ color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": 
 #      4) Стоит подумать над тем, что именно опрокидывать в функцию.
 
 
-def pict_and_react():
+def pict_and_react(time_for_showing):
 
     """Инициализируем pygame"""
 
@@ -46,13 +44,14 @@ def pict_and_react():
         sys.exit()
 
     #  Функция смены картинки.
-    def change_stimul():
-        print('f')
+    def change_stimulus():
+        pass
 
     """Ниже будут переменные и созданные события"""
 
     #  Переменные.
-    time_in_mill_sec = 1000
+    time_in_mill_sec = time_for_showing * 1000
+
     tick_rate = 30
     start_testing = False
 
@@ -82,15 +81,13 @@ def pict_and_react():
                         print('s')
 
             if event.type == pygame.USEREVENT:
-                change_stimul()
+                change_stimulus()
 
         clock.tick(tick_rate)
-
-
 
     """Возвращаем информацию"""
 
     return None
 
 
-pict_and_react()
+pict_and_react(3)
