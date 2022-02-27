@@ -63,9 +63,9 @@ def pict_and_react(time_for_showing):
         sys.exit()
 
     #  Функция смены картинки.
-    def change_stimulus(height):
+    def change_stimulus(height__inside_func):
         pygame.draw.line(screen, color_dict_for_n_back['white'],
-                         [length, height], [0, height])
+                         [length, height__inside_func], [0, height__inside_func])
 
     """Ниже находится цикл для обработки событий"""
 
@@ -94,7 +94,6 @@ def pict_and_react(time_for_showing):
 
         pygame.display.update()
         clock.tick(tick_rate)
-
 
     """Возвращаем информацию"""
 
