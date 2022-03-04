@@ -6,12 +6,23 @@
 import pygame
 import sys
 import time
+import copy
 
 
 """Функция нужно для проверки таймера по событиям."""
 
 
 def check_func():
+
+    def time_func():
+        start = time.monotonic()
+        while True:
+            result = time.monotonic() - start
+            if 2 < result:
+                print(start)
+                print(result)
+                print("Program time: {:>.3f}".format(result) + " seconds.")
+                start = time.monotonic()
 
     pygame.init()
     screen_nums = (720, 480)
@@ -25,14 +36,19 @@ def check_func():
     clock = pygame.time.Clock()
 
     start_circle = 0
-    pict_changer = pygame.event.Event(pygame.USEREVENT)
-
-    n = 1
-    alpha_time = 0
-    beta_time = alpha_time + n
-    print(pict_changer)
+    step = 2
+    start = time.monotonic()
+    deepcopy_start = copy.deepcopy(start)
 
     while True:
+        start = time.monotonic()
+
+        if start > deepcopy_start + step:
+            result = time.monotonic() - deepcopy_start
+            deepcopy_start = copy.deepcopy(start)
+            print(start)
+            print("Program time: {:>.3f}".format(result) + " seconds.")
+
         for event in pygame.event.get():
 
             if event.type == pygame.QUIT:
@@ -41,33 +57,18 @@ def check_func():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
-                    pygame.draw.rect(screen, color.get('green'),
+                    pygame.draw.rect(screen, color.get(color_circle.get(num_color)),
                                      (screen_nums[0] / 1 - 50, screen_nums[1] / 1 - 50, 40, 50))
-                if event.key == pygame.K_SPACE:
-                    if start_circle == 0:
-                        start_circle = 1
-
-            if start_circle == 1:
-                if alpha_time == 0:
-                    alpha_time = time.time()
-                elif alpha_time <= beta_time:
-                    pass
-                else:
-                    alpha_time = time.time()
-
-                if beta_time == alpha_time:
-                    pygame.draw.rect(screen, color.get(color_circle[num_color]),
-                                     (screen_nums[0] / 2 - 50, screen_nums[1] / 2 - 50, 100, 100))
                     num_color += 1
                     if num_color > 2:
                         num_color = 0
+
 
         #  Благодаря этим линиям я могу быть уверен в центрировании картинки.
         pygame.draw.line(screen, color.get('blue'), [screen_nums[0], 0], [0, screen_nums[1]])
         pygame.draw.line(screen, color.get('blue'), [screen_nums[0], screen_nums[1]], [0, 0])
 
         clock.tick(60)
-
         pygame.display.update()
 
 
