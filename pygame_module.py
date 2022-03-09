@@ -5,6 +5,8 @@
 
 import pygame
 import sys
+import time
+import copy
 
 '''Нижу находятся словари-расшифровщики'''
 
@@ -20,6 +22,9 @@ figure_dict_for_n_back = {"triangle_up": "", "square": "",
 color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255),
                          "yellow": (225, 225, 0), "brown": (100, 50, 30), "black": (0, 0, 0), "orange": (255, 100, 25),
                          "beige": (237, 211, 156)}
+
+dict_for_choose_color = {0: "white", 1: "red", 2: "green", 3: "blue", 4: "yellow",
+                         5: "brown", 6: "black", 7: "orange", 8: "beige"}
 
 
 """Ниже находится функция 'игры' N-Back. Вывод картинки и регистрация нажатий."""
@@ -42,17 +47,24 @@ def pict_and_react(time_for_showing):
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 
     #  Переменные.
-    time_in_mill_sec = time_for_showing * 500
-    color = 0
     screen_info = pygame.display.get_window_size()
     length = screen_info[0]
-    height = 0
+    height = screen_info[1]
 
-    tick_rate = 30
+    # Тут логические переменные и переменные для скорости отрисовки.
+    tick_rate = 60
     start_testing = False
 
+    # Тут переменные связанные с временем.
+    start_time = time.monotonic()
+    end_time = copy.deepcopy(start_time)
+    time_to_show = 1
+    time_in_mill_sec = time_for_showing * 500
+
+    # Тут переменные связанные с цветом
+    color = 0
+
     #  Созданные события.
-    change_event = pygame.event.Event(pygame.USEREVENT)
     clock = pygame.time.Clock()
 
     """Ниже будут функции"""
@@ -63,35 +75,25 @@ def pict_and_react(time_for_showing):
         sys.exit()
 
     #  Функция смены картинки.
-    def change_stimulus(height_inside_func):
-        pygame.draw.line(screen, color_dict_for_n_back['white'],
-                         [length, height_inside_func], [0, height_inside_func])
+    def change_stimulus():
+        pygame.draw.circle(screen, color_dict_for_n_back['white'],
+                           [(length / 3), (height / 4)], 50)
 
     """Ниже находится цикл для обработки событий"""
 
     while True:
-        for event in pygame.event.get():
 
-            if event.type == pygame.QUIT:
-                quit_func()
+        start_time = time.monotonic()
 
-            if start_testing is True:
-                pygame.time.set_timer(change_event, time_in_mill_sec, True)
+        if start_time > end_time + time_to_show:
+            end_time = copy.deepcopy(start_time)
+            pygame.draw.circle(screen, color_dict_for_n_back[dict_for_choose_color[color]],
+                               [(length / 2), (height / 2)], 60)
+            color += 1
+            if color == 8:
+                color = 0
 
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    quit_func()
-
-                if event.key == pygame.K_SPACE:
-                    if start_testing is False:
-                        start_testing = True
-                    else:
-                        pygame.draw.line(screen, color_dict_for_n_back['white'],
-                                         [length, screen_info[1] - height], [0, screen_info[1] - height])
-
-            if event.type == pygame.USEREVENT:
-                change_stimulus(height)
-                height += 1
+        change_stimulus()
 
         pygame.display.update()
         clock.tick(tick_rate)
