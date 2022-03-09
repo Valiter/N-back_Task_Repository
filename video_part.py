@@ -145,10 +145,7 @@ def pict_and_react(time_for_showing):
 
         pygame.display.update()
         clock.tick(tick_rate)
-
-    """Возвращаем информацию"""
-
-    return None
+        return None
 
 
 pict_and_react(1)
