@@ -87,11 +87,11 @@ def pict_and_react(time_for_showing):
 
         if start_time > end_time + time_to_show:
             end_time = copy.deepcopy(start_time)
-            pygame.draw.circle(screen, color_dict_for_n_back[dict_for_choose_color[color]],
-                               [(length / 2), (height / 2)], 60)
-            color += 1
-            if color == 8:
-                color = 0
+
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.QUIT or pygame.K_ESCAPE:
+                    quit_func()
 
         change_stimulus()
 
