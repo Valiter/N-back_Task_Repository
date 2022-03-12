@@ -1,6 +1,8 @@
 
 
 """ Основной модуль программы, где используются все остальные элементы для вызова кода."""
+
+
 import checking_inputs
 import generator_git
 import analyzer
