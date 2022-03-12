@@ -3,7 +3,7 @@ from tkinter import ttk
 from datetime import datetime  # for current date and time
 
 
-def func_win():
+def func_window():
 
     def get_data():
         name_student = name.get()
@@ -112,4 +112,4 @@ def func_win():
     window.mainloop()
 
 
-func_win()
+func_window()
