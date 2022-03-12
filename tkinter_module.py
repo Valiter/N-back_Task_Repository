@@ -38,7 +38,7 @@ def func_window():
 
     #  Создание окна
     window = Tk()
-    window.geometry('1080x720')
+    window.attributes('-fullscreen', True)
     window.title('Main information')
 
     #  Текст Введите имя
