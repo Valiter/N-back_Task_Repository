@@ -100,7 +100,5 @@ def pict_and_react(time_for_showing):
 
     """Возвращаем информацию"""
 
-    return None
-
 
 pict_and_react(1)
