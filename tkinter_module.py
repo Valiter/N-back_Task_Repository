@@ -2,6 +2,7 @@ from tkinter import*
 from tkinter import ttk
 from datetime import datetime  # for current date and time
 
+
 def get_data():
     name_student = Name.get()
     date_student = Date.get()
