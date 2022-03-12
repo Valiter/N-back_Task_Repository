@@ -34,7 +34,17 @@ def dictionaries():
 
     color_dict_for_n_back = ["white", "red", "green", "blue", "yellow", "brown", "black", "orange", "beige"]
 
-    return rus_list_for_n_back, eng_dict_for_n_back, num_list_for_n_back, figure_dict_for_n_back, color_dict_for_n_back
+    picture_dictionary_for_n_back = ["again", "good", "ura", "enter", "pause", "ball", "ball_face", "ball_on_tree",
+                                     "boy_musition", "bucket", "cat", "computer", "cop", "doctor", "duck",
+                                     "elza", "family", "fire_quard", "flower_2", "flower",  "fridge", "frog",
+                                     "girl_painter", "good", "grandmother", "jam", "jerry", "lion", "man", "mouse",
+                                     "blank", "phone", "pig", "popcorn", "pot", "reader", "snake", "sun",
+                                     "teacher", "tree", "turtle", "warrior", "watermelon", "driver", "red_car",
+                                     "builder"
+                                     ]
+
+    return rus_list_for_n_back, eng_dict_for_n_back, num_list_for_n_back, \
+        figure_dict_for_n_back, color_dict_for_n_back, picture_dictionary_for_n_back
 
 
 """Функция ниже используется в другой функции. Сама функция создает список рандомизированных ключей или элементов, 
@@ -58,7 +68,7 @@ def choosing_elements(some_list, count_of_stimulus):
     return list(keys)
 
 
-"""Функция ниже использует функцию choosing_elements внутри себя. Сама функция создает """
+"""Функция ниже использует функцию choosing_elements внутри себя. Сама функция создает список уникальных символов."""
 
 
 def n_back_choosing_stimulus(dict_in, stimulus_in, type_letter):
@@ -67,8 +77,9 @@ def n_back_choosing_stimulus(dict_in, stimulus_in, type_letter):
     count_of_stimulus = stimulus_in
     num_of_dict = dict_in
     dictionary_from_func = dictionaries()
+    length = len(dictionaries())
 
-    if (int(num_of_dict) < 6) and (int(num_of_dict) > 0):
+    if (int(num_of_dict) < length + 1) and (int(num_of_dict) > 0):
         num_of_dict = int(num_of_dict) - 1
 
         if type((dictionary_from_func[int(num_of_dict)])) is list:
