@@ -32,7 +32,7 @@ def func_window():
         #  Дата рождения:']+'\t'+expInfo['4. Дата тестирования:']+ '\n')
         results.write(name_student + '\t' + date_student + '\t' + str(datetime.date(datetime.now())) + '\t' +
                       dict_student + '\t' + number_of_elements_student + '\t' + length_student + '\t' +
-                      interval_student + '\t' + step_student)
+                      interval_student + '\t' + step_student + '\n')
         results.close()
         window.destroy()
 
@@ -72,7 +72,6 @@ def func_window():
                                         'Colors'
                               ])
 
-    print(dict(dictionary))
     dictionary.grid(column=0, row=5)
     dictionary.current(0)
 
@@ -102,7 +101,7 @@ def func_window():
     step_text.grid(column=0, row=12)
     #  Выпадающий список с шагом
     step = Entry(window, width=10)
-    step.grid(column=0, row=11)
+    step.grid(column=0, row=13)
 
     #  Кнопка для перехода к тесту
     #  Gри нажатии кнопки происходит запись данных в файл и закрытие окна
@@ -110,6 +109,3 @@ def func_window():
     next_btn.grid(column=10, row=20)
 
     window.mainloop()
-
-
-func_window()
