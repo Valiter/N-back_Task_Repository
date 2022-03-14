@@ -29,4 +29,3 @@ while go is True:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
-
