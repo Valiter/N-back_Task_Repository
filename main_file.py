@@ -27,8 +27,13 @@ switch = True
 # stimulus_fin_list = 20
 
 
-tkinter_module.func_window()
+list_from_tkinter = tkinter_module.func_window()
 
+int(global_num_of_dict)
+int(global_count_of_stimulus)
+int(interval)
+int(stimulus_fin_list)
+int(type_of_letter)
 
 while switch is True:
     if checking_inputs.checking_inputs_func(int(global_num_of_dict), int(global_count_of_stimulus),

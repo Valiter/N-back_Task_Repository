@@ -2,12 +2,67 @@ from tkinter import*
 from tkinter import ttk
 from datetime import datetime  # for current date and time
 
+dict_student = None
+number_of_elements_student = None
+length_student = None
+interval_student = None
+step_student = None
+
+
+def recoder_for_logical_part(string_to_recode):
+    number_of_dictionary = None
+    case = 2
+
+    if string_to_recode == "Eng UPPERCASE":
+        number_of_dictionary = 2
+        case = 1
+
+    if string_to_recode == "Eng lowercase":
+        number_of_dictionary = 2
+        case = 2
+
+    if string_to_recode == "Rus UPPERCASE":
+        number_of_dictionary = 1
+        case = 1
+
+    if string_to_recode == "Rus lowercase":
+        number_of_dictionary = 1
+        case = 2
+
+    if string_to_recode == "Pictures":
+        number_of_dictionary = 6
+
+    if string_to_recode == "Numbers":
+        number_of_dictionary = 3
+
+    if string_to_recode == 'Figures':
+        number_of_dictionary = 4
+
+    if string_to_recode == 'Colors':
+        number_of_dictionary = 5
+
+    return number_of_dictionary, case
+
 
 def func_window():
 
+    global dict_student
+    global number_of_elements_student
+    global length_student
+    global interval_student
+    global step_student
+
     def get_data():
+
+        global dict_student
+        global number_of_elements_student
+        global length_student
+        global interval_student
+        global step_student
+
         name_student = name.get()
         date_student = date.get()
+
         dict_student = dictionary.get()
         number_of_elements_student = number_of_elements.get()
         length_student = length.get()
@@ -76,7 +131,7 @@ def func_window():
     dictionary.current(0)
 
     #  Текст кол-во элементов
-    num_of_elements = Label(window, text='Введите кол-во элементов: ')
+    num_of_elements = Label(window, text='Введите кол-во уникальных элементов: ')
     num_of_elements.grid(column=0, row=6)
     #  Окошко для ввода кол-ва элементов
     number_of_elements = Entry(window, width=10)
@@ -97,9 +152,9 @@ def func_window():
     interval.grid(column=0, row=11)
 
     #  Текст выберите шаг
-    step_text = Label(window, text='Выберите шаг: ')
+    step_text = Label(window, text='Выберите шаг N-back: ')
     step_text.grid(column=0, row=12)
-    #  Выпадающий список с шагом
+    #  Окошка для ввода шага n-back
     step = Entry(window, width=10)
     step.grid(column=0, row=13)
 
@@ -109,3 +164,5 @@ def func_window():
     next_btn.grid(column=10, row=20)
 
     window.mainloop()
+
+    return dict_student, number_of_elements_student, length_student, interval_student, step_student

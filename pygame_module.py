@@ -26,6 +26,13 @@ color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": 
 dict_for_choose_color = {0: "white", 1: "red", 2: "green", 3: "blue", 4: "yellow",
                          5: "brown", 6: "black", 7: "orange", 8: "beige"}
 
+picture_dictionary = ["again", "good", "ura", "enter", "pause", "ball", "ball_face", "ball_on_tree",
+                      "boy_musition", "bucket", "cat", "computer", "cop", "doctor", "duck",
+                      "elza", "family", "fire_quard", "flower_2", "flower", "fridge", "frog",
+                      "girl_painter", "good", "grandmother", "jam", "jerry", "lion", "man", "mouse",
+                      "blank", "phone", "pig", "popcorn", "pot", "reader", "snake", "sun",
+                      "teacher", "tree", "turtle", "warrior", "watermelon", "driver", "red_car",
+                      "builder"]
 
 """Ниже находится функция 'игры' N-Back. Вывод картинки и регистрация нажатий."""
 #  Необходимо сделать:
@@ -77,7 +84,11 @@ def pict_and_react(time_for_showing):
     #  Функция смены картинки.
     def change_stimulus():
         pygame.draw.circle(screen, color_dict_for_n_back['white'],
-                           [(length / 3), (height / 4)], 50)
+                           [(length / 2), (height / 2)], 150)
+
+    def picture_changer():
+        pass
+
 
     """Ниже находится цикл для обработки событий"""
 
@@ -93,7 +104,6 @@ def pict_and_react(time_for_showing):
                 if event.key == pygame.QUIT or pygame.K_ESCAPE:
                     quit_func()
 
-        change_stimulus()
 
         pygame.display.update()
         clock.tick(tick_rate)
