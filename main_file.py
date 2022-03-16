@@ -12,28 +12,34 @@ import tkinter_module
 # Переменная для запуска цикла while.
 switch = True
 
-"""Запрашиваемые данные через input()-ы выношу отдельно, чтобы было понятно, что нужно в видео части."""
 
-# global_num_of_dict = input("Напишите число от 1-го до 6-ти: ")
-# global_count_of_stimulus = int(input("Напишите количество символов используемых для создания символьного ряда: "))
-# # А ведь строчка ниже не нужна, если я не вызываю словарь.
-# type_of_letter = int(input("Введите размер буквы: 1 - Большая, 2 - Маленькая: "))
-# interval = input("напишите длинну интервала. 1-back (11), 2-back (101), 3-back (1001).\n
-# Необходима только цифра шага: ")
-#
-# """Тут находятся заранее заданные данные, которые ТОЖЕ надо будет запрашивать или иметь заранее созданные значения."""
-#
-# time_step = input("Введите время для показа одного стимула: ")
-# stimulus_fin_list = 20
+"""Вызывем интерфейс для ввода данных и работаем с этими данными."""
 
 
 list_from_tkinter = tkinter_module.func_window()
 
-int(global_num_of_dict)
-int(global_count_of_stimulus)
-int(interval)
-int(stimulus_fin_list)
-int(type_of_letter)
+print(list_from_tkinter)
+
+# Перегоняем выпадающие варианты словарей в численные значения.
+tkinter_reviver = tkinter_module.recoder_for_logical_part(list_from_tkinter[0])
+# Создаем переменные с чиловыми значениями для работы со словарями.
+global_num_of_dict = tkinter_reviver[0]
+type_of_letter = tkinter_reviver[1]
+
+# Сохраняем введенные значения.
+global_count_of_stimulus = list_from_tkinter[1]
+interval = list_from_tkinter[4]
+stimulus_fin_list = list_from_tkinter[2]
+
+# Сохраняем время к показу картинки.
+time_to_show_picture = list_from_tkinter[3]
+
+# Не понимаю почему не работает так,как надо, но со строчкой ниже все работает корректно.
+global_count_of_stimulus = int(global_count_of_stimulus)
+
+
+"""Цикл для создания рядов, необходимых для видео ряда."""
+
 
 while switch is True:
     if checking_inputs.checking_inputs_func(int(global_num_of_dict), int(global_count_of_stimulus),

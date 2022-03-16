@@ -89,7 +89,6 @@ def pict_and_react(time_for_showing):
     def picture_changer():
         pass
 
-
     """Ниже находится цикл для обработки событий"""
 
     while True:
@@ -104,11 +103,8 @@ def pict_and_react(time_for_showing):
                 if event.key == pygame.QUIT or pygame.K_ESCAPE:
                     quit_func()
 
-
         pygame.display.update()
         clock.tick(tick_rate)
-
-    """Возвращаем информацию"""
 
 
 pict_and_react(1)
