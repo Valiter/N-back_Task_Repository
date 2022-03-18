@@ -6,6 +6,7 @@
 import checking_inputs
 import generator_git
 import analyzer
+import pygame_module
 import tkinter_module
 
 
@@ -40,6 +41,9 @@ global_count_of_stimulus = int(global_count_of_stimulus)
 
 """Цикл для создания рядов, необходимых для видео ряда."""
 
+chosen_stimulus = None
+end_of_thinking = None
+results_of_true_false = None
 
 while switch is True:
     if checking_inputs.checking_inputs_func(int(global_num_of_dict), int(global_count_of_stimulus),
@@ -66,3 +70,8 @@ while switch is True:
     else:
         print("!")
         switch = False
+
+
+"""Ниже находится передача информации в pygame_module.py."""
+
+# pygame_module.pict_and_react(time_to_show_picture, end_of_thinking, global_num_of_dict)
