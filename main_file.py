@@ -6,7 +6,6 @@
 import checking_inputs
 import generator_git
 import analyzer
-import pygame_module
 import tkinter_module
 
 
