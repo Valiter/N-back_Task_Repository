@@ -17,9 +17,9 @@ import os
 #  Может только позиционирование прописать надо? Непонятно.
 #  Вообще, можно вызывать функции!!! Это клево. Например, можно вызывать необходимую хрень, ...
 #  Которая будет делать что мне надо.
-figure_dict_for_n_back = {"triangle_up": "", "square": "",
-                          "circle": "", "oval": "",
-                          "prism": "", "triangle_down": ""}
+figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
+                          "circle": "circle", "oval": "oval",
+                          "prism": "prism", "triangle_down": "triangle_down"}
 
 color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255),
                          "yellow": (225, 225, 0), "brown": (100, 50, 30), "black": (0, 0, 0), "orange": (255, 100, 25),
@@ -36,11 +36,15 @@ picture_list = ["again", "good", "ura", "enter", "pause", "ball", "ball_face", "
                 "teacher", "tree", "turtle", "warrior", "watermelon", "driver", "red_car",
                 "builder"]
 
-ru_letter_list = []
+ru_letter_list = ["a", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л",
+                  "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш",
+                  "щ", "ъ", "ы", "ь", "э", "ю", "я"]
 
-eng_letter_list = []
+eng_letter_list = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l",
+                   "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x",
+                   "y", "z"]
 
-numbers_list = []
+numbers_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
 """Ниже находится функция 'игры' N-Back. Вывод картинки и регистрация нажатий."""
@@ -84,25 +88,32 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
 
     # Переменная для определения типа списка с картинками.
     type_of_pictures_and_stimulus = None
+    color = None
 
     # Русские буквы.
     if type_of_stimulus == 1:
-        type_of_pictures_and_stimulus = None
+        type_of_pictures_and_stimulus = ru_letter_list
+        color = None
     # Английские буквы.
     elif type_of_stimulus == 2:
-        type_of_pictures_and_stimulus = None
+        type_of_pictures_and_stimulus = eng_letter_list
+        color = None
     # Числа.
     elif type_of_stimulus == 3:
-        type_of_pictures_and_stimulus = None
+        type_of_pictures_and_stimulus = numbers_list
+        color = None
     # Фигуры.
     elif type_of_stimulus == 4:
         type_of_pictures_and_stimulus = figure_dict_for_n_back
+        color = None
     # Цвета.
     elif type_of_stimulus == 5:
         type_of_pictures_and_stimulus = color_dict_for_n_back
+        color = None
     # Картинки.
     elif type_of_stimulus == 6:
         type_of_pictures_and_stimulus = picture_list
+        color = ("beige")
 
     """Ниже находятся функции"""
 
@@ -120,20 +131,18 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     def get_pressed():
         pass
 
-    def change_stimulus(name):
+    def change_stimulus(name, color_3):
+        color_2 = color_dict_for_n_back(color_3)
         image = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
         screen.blit(image, ((length / 2) - 683, (height / 2) - 384))
-        pygame.draw.rect(screen, color_dict_for_n_back['beige'],
+        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
                          [length / 2 - 700, height / 2 - 400, length / 2 + 150, height / 2 - 690])
-        pygame.draw.rect(screen, color_dict_for_n_back['beige'],
+        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
                          [length / 2 - 700, height / 2 + 380, length / 2 + 150, height / 2 - 690])
-        pygame.draw.rect(screen, color_dict_for_n_back['beige'],
+        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
                          [length / 2 - 700, height / 2 - 400, 30, 800])
-        pygame.draw.rect(screen, color_dict_for_n_back['beige'],
+        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
                          [length / 2 + 680, height / 2 - 400, 30, 800])
-
-    def picture_changer():
-        pass
 
     """Ниже находится цикл для обработки событий"""
 
@@ -148,9 +157,8 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         if start_time > end_time + time_for_showing + 0.1:
             if length_of_line_of_stimulus > index_num:
                 end_time = copy.deepcopy(start_time)
-                print(gived_line_of_stimulus[index_num])
 
-                change_stimulus(gived_line_of_stimulus[index_num])
+                change_stimulus(gived_line_of_stimulus[index_num], color)
 
                 index_num += 1
             else:
