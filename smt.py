@@ -7,6 +7,14 @@ import sys
 import os
 
 
+def stimulus_line_for_pictures_renaming(stimulus_line):
+    renamed_line = []
+    for element in stimulus_line:
+        pass
+
+    return renamed_line
+
+
 def show_stimulus_function(time_to_show_picture, line_of_stimulus, tupe_of_dictionary):
     # С начала получает время к показу, линию стимулов и тип словаря (хотя не очень ясно зачем)
     # Потом нужно сделать вывод с периодикой — но период временной я умею делать через deepcopy
