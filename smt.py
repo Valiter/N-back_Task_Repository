@@ -54,6 +54,7 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
     time_2 = copy.deepcopy(time_1) + time_to_show_picture
 
     num = 0
+    list_of_reactions = []
 
     def fill_and_print_pictures():
         if line_of_stimulus[0] in picture_list:
@@ -114,6 +115,7 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
             else:
                 print("Программа завершена.")
                 screen.fill(color_of_fon)
+                return list_of_reactions
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -122,9 +124,13 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     quit_func()
+                if event.key == pygame.K_SPACE:
+                    pass
 
         line_of_remaining_time(time_to_show_picture, time_1, time_2, color_of_fon)
         pygame.display.update()
 
 
-show_stimulus_function(5, ['A', 'B', 'A', 'B', 'A', 'V', 'A', 'F', 'D', 'C'])
+list_a = ['A', 'B', 'A', 'B']
+a = show_stimulus_function(1, list_a)
+print(a)
