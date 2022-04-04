@@ -52,8 +52,10 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
 
     time_1 = time.monotonic()
     time_2 = copy.deepcopy(time_1) + time_to_show_picture
+    clock = pygame.time.Clock()
 
     num = 0
+    reaction = None
     list_of_reactions = []
 
     def fill_and_print_pictures():
@@ -70,29 +72,30 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
 
     def show_picture(name, color):
         image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
-        image_size = pygame.image.load(os.path.join("stimuli_img", name + '.png')).get_size()
+        image_show = pygame.transform.scale(image_show, [1024, 720])
+        image_size = image_show.get_size()
         image_size_length = image_size[0]
         image_size_height = image_size[1]
         first_point = (length / 2) - (image_size_length / 2)
         second_point = (height / 2) - (image_size_height / 2)
         screen.blit(image_show, (first_point, second_point))
 
-        pygame.draw.rect(screen, color, [first_point + image_size_length - 10,
+        pygame.draw.rect(screen, color_dict_for_n_back['red'], [first_point + image_size_length - 10,
                                          second_point - 10, 50, image_size_height + 30])
-        pygame.draw.rect(screen, color, [first_point - 10, second_point - 10, 50,
+        pygame.draw.rect(screen, color_dict_for_n_back['yellow'], [first_point - 10, second_point - 10, 50,
                                          image_size_height + 20])
-        pygame.draw.rect(screen, color, [first_point - 10,
+        pygame.draw.rect(screen, color_dict_for_n_back['green'], [first_point - 10,
                                          second_point + image_size_height - 10,
                                          image_size_length + 20, 30])
-        pygame.draw.rect(screen, color, [first_point - 10, second_point - 10,
+        pygame.draw.rect(screen, color_dict_for_n_back['blue'], [first_point - 10, second_point - 10,
                                          image_size_length + 20, 30])
 
     def line_of_remaining_time(time_step, time_mono_tick_1, time_mono_tick_2, color):
         time_line = time_mono_tick_2 - time_mono_tick_1
-        pygame.draw.rect(screen, color_dict_for_n_back['black'], [length / 4, height / 20,
-                         (2 * (length / 4)), (height / 20) - 50])
-        pygame.draw.rect(screen, color, [length / 4, height / 20,
-                         (2 * (length / 4)) / time_step * time_line, (height / 20) - 50])
+        pygame.draw.rect(screen, color_dict_for_n_back['black'], [length / 4, 5,
+                         (2 * (length / 4)), 15])
+        pygame.draw.rect(screen, color, [length / 4, 5,
+                         (2 * (length / 4)) / time_step * time_line, 15])
 
     color_of_fon = fill_and_print_pictures()
     screen.fill(color_of_fon)
@@ -106,6 +109,8 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
         if time_1 > time_2 + 1:
             time_2 = copy.deepcopy(time_1) + time_to_show_picture
 
+            list_of_reactions.append(reaction)
+            reaction = False
             # И тут мы начинаем что-то делать.
             # Очевидно, что забацаю кучу функций, которые будут легко и просто выносится вне этого цикла, ...
             # Чтобы не мозолить мне глаза.
@@ -125,12 +130,13 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
                 if event.key == pygame.K_ESCAPE:
                     quit_func()
                 if event.key == pygame.K_SPACE:
-                    pass
+                    reaction = True
 
         line_of_remaining_time(time_to_show_picture, time_1, time_2, color_of_fon)
+        clock.tick(120)
         pygame.display.update()
 
 
 list_a = ['A', 'B', 'A', 'B']
-a = show_stimulus_function(1, list_a)
+a = show_stimulus_function(3, list_a)
 print(a)

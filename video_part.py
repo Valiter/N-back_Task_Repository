@@ -1,23 +1,15 @@
 
 
-"""Тут находится отслеживание работы клавиш, а также вывод информации на экран с помощью модуля PyGame"""
-
-
 import pygame
-import sys
-import time
 import copy
+import time
+import sys
+import os
 
-'''Нижу находятся словари-расшифровщики'''
 
-
-#  Подозреваю, что словарь с фигурами тут не нужен... Или нужно как-то это переработать.
-#  Может только позиционирование прописать надо? Непонятно.
-#  Вообще, можно вызывать функции!!! Это клево. Например, можно вызывать необходимую хрень, ...
-#  Которая будет делать что мне надо.
-figure_dict_for_n_back = {"triangle_up": "", "square": "",
-                          "circle": "", "oval": "",
-                          "prism": "", "triangle_down": ""}
+figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
+                          "circle": "circle", "oval": "oval",
+                          "prism": "prism", "triangle_down": "triangle_down"}
 
 color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255),
                          "yellow": (225, 225, 0), "brown": (100, 50, 30), "black": (0, 0, 0), "orange": (255, 100, 25),
@@ -26,125 +18,120 @@ color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": 
 dict_for_choose_color = {0: "white", 1: "red", 2: "green", 3: "blue", 4: "yellow",
                          5: "brown", 6: "black", 7: "orange", 8: "beige"}
 
+picture_list = ["again", "good", "ura", "enter", "pause", "ball", "ball_face", "ball_on_tree",
+                "boy_musition", "bucket", "cat", "computer", "cop", "doctor", "duck",
+                "elza", "family", "fire_quard", "flower_2", "flower", "fridge", "frog",
+                "girl_painter", "good", "grandmother", "jam", "jerry", "lion", "man", "mouse",
+                "blank", "phone", "pig", "popcorn", "pot", "reader", "snake", "sun",
+                "teacher", "tree", "turtle", "warrior", "watermelon", "driver", "red_car",
+                "builder"]
 
-"""Ниже находится функция 'игры' N-Back. Вывод картинки и регистрация нажатий."""
-#  Необходимо сделать:
-#      1) Вывод картинки.
-#      2) Регистрацию нажатий в список и получение этого списка через return.
-#      3) Реализовать как-то остслеживание времени? Вопрос.
-#      4) Стоит подумать над тем, что именно опрокидывать в функцию.
+ru_letter_list_bl = ["А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л",
+                     "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш",
+                     "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"]
+
+eng_letter_list_bl = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+                      "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+                      "Y", "Z"]
+
+numbers_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 
-def pict_and_react(time_for_showing):
-
-    """Инициализируем pygame"""
+def show_stimulus_function(time_to_show_picture, line_of_stimulus):
+    # С начала получает время к показу, линию стимулов и тип словаря (хотя не очень ясно зачем)
+    # Потом нужно сделать вывод с периодикой — но период временной я умею делать через deepcopy
+    # А вот вывод картинок... Сделать стимульный ряд из картинок? ПОхоже, что это единственный вариант, ...
+    # Чтобы мозги не ебать.
 
     pygame.init()
 
-    """Ниже будут переменные и созданные события"""
-
-    #  Объявляем размер окна.
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    size = pygame.display.get_window_size()
+    length = size[0]
+    height = size[1]
 
-    #  Переменные.
-    screen_info = pygame.display.get_window_size()
-    length = screen_info[0]
-    height = screen_info[1]
+    time_1 = time.monotonic()
+    time_2 = copy.deepcopy(time_1) + time_to_show_picture
 
-    # Тут логические переменные и переменные для скорости отрисовки.
-    tick_rate = 30
-    start_testing = False
+    num = 0
+    list_of_reactions = []
 
-    # Тут переменные связанные с временем.
-    start_time = time.monotonic()
-    end_time = copy.deepcopy(start_time)
-    time_to_show = 1
-    time_in_mill_sec = time_for_showing * 500
+    def fill_and_print_pictures():
+        if line_of_stimulus[0] in picture_list:
+            fon_fill = color_dict_for_n_back['beige']
+        else:
+            fon_fill = color_dict_for_n_back['white']
 
-    # Тут переменные связанные с цветом
-    color = 0
+        return fon_fill
 
-    #  Созданные события.
-    clock = pygame.time.Clock()
-
-    # Переменные связанные с позиционированием.
-    circle_x = 0
-    circle_y = 0
-    circle_move_x = None
-    circle_move_y = None
-    position = [(length / 3) + circle_x, (height / 4) + circle_y]
-
-    """Ниже будут функции"""
-
-    #  Функция выхода из программы.
     def quit_func():
         pygame.quit()
         sys.exit()
 
-    #  Функция смены картинки.
-    def change_stimulus(position_in_func, sec_position_in_func):
-        pygame.draw.circle(screen, color_dict_for_n_back['black'],
-                           sec_position_in_func, 50)
-        pygame.draw.circle(screen, color_dict_for_n_back['white'],
-                           position_in_func, 50)
+    def show_picture(name, color):
+        image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
+        image_show = pygame.transform.scale(image_show, [1024, 720])
+        image_size = image_show.get_size()
+        image_size_length = image_size[0]
+        image_size_height = image_size[1]
+        first_point = (length / 2) - (image_size_length / 2)
+        second_point = (height / 2) - (image_size_height / 2)
+        screen.blit(image_show, (first_point, second_point))
 
-    """Ниже находится цикл для обработки событий"""
+        pygame.draw.rect(screen, color_dict_for_n_back['red'], [first_point + image_size_length - 10,
+                                         second_point - 10, 50, image_size_height + 30])
+        pygame.draw.rect(screen, color_dict_for_n_back['yellow'], [first_point - 10, second_point - 10, 50,
+                                         image_size_height + 20])
+        pygame.draw.rect(screen, color_dict_for_n_back['green'], [first_point - 10,
+                                         second_point + image_size_height - 10,
+                                         image_size_length + 20, 30])
+        pygame.draw.rect(screen, color_dict_for_n_back['blue'], [first_point - 10, second_point - 10,
+                                         image_size_length + 20, 30])
+
+    def line_of_remaining_time(time_step, time_mono_tick_1, time_mono_tick_2, color):
+        time_line = time_mono_tick_2 - time_mono_tick_1
+        pygame.draw.rect(screen, color_dict_for_n_back['black'], [length / 4, 5,
+                         (2 * (length / 4)), 15])
+        pygame.draw.rect(screen, color, [length / 4, 5,
+                         (2 * (length / 4)) / time_step * time_line, 15])
+
+    color_of_fon = fill_and_print_pictures()
+    screen.fill(color_of_fon)
 
     while True:
+        time_1 = time.monotonic()
 
-        start_time = time.monotonic()
+        if time_1 > time_2 and num < len(line_of_stimulus):
+            screen.fill(color_of_fon)
 
-        if start_time > end_time + time_to_show:
-            end_time = copy.deepcopy(start_time)
-            pygame.draw.circle(screen, color_dict_for_n_back[dict_for_choose_color[color]],
-                               [(length / 2), (height / 2)], 60)
-            color += 1
-            if color == 8:
-                color = 0
+        if time_1 > time_2 + 1:
+            time_2 = copy.deepcopy(time_1) + time_to_show_picture
 
-        if circle_move_x is True:
-            circle_x -= 10
-        if circle_move_x is False:
-            circle_x += 10
-        if circle_move_y is True:
-            circle_y -= 10
-        if circle_move_y is False:
-            circle_y += 10
+            # И тут мы начинаем что-то делать.
+            # Очевидно, что забацаю кучу функций, которые будут легко и просто выносится вне этого цикла, ...
+            # Чтобы не мозолить мне глаза.
+            if len(line_of_stimulus) > num:
+                show_picture(line_of_stimulus[num], color_of_fon)
+                num += 1
+            else:
+                print("Программа завершена.")
+                screen.fill(color_of_fon)
+                return list_of_reactions
 
         for event in pygame.event.get():
-
             if event.type == pygame.QUIT:
                 quit_func()
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     quit_func()
+                if event.key == pygame.K_SPACE:
+                    pass
 
-                if event.key == pygame.K_DOWN:
-                    circle_move_y = False
-                if event.key == pygame.K_UP:
-                    circle_move_y = True
-                if event.key == pygame.K_LEFT:
-                    circle_move_x = True
-                if event.key == pygame.K_RIGHT:
-                    circle_move_x = False
-
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_DOWN:
-                    circle_move_y = None
-                if event.key == pygame.K_UP:
-                    circle_move_y = None
-                if event.key == pygame.K_LEFT:
-                    circle_move_x = None
-                if event.key == pygame.K_RIGHT:
-                    circle_move_x = None
-
-        sec_position = copy.deepcopy(position)
-        position = [(length / 3) + circle_x, (height / 4) + circle_y]
-        change_stimulus(position, sec_position)
-
+        line_of_remaining_time(time_to_show_picture, time_1, time_2, color_of_fon)
         pygame.display.update()
-        clock.tick(tick_rate)
 
 
-pict_and_react(1)
+list_a = ['A', 'B', 'A', 'B']
+a = show_stimulus_function(1, list_a)
+print(a)
