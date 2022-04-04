@@ -5,6 +5,11 @@ import copy
 import time
 import sys
 import os
+
+import checking_inputs
+import generator_git
+import analyzer
+import tkinter_module
 import smt
 
 
