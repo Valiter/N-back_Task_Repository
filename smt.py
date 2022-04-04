@@ -1,142 +1,74 @@
 
 
-import pygame
-import copy
-import time
-import sys
-import os
+""" Основной модуль программы, где используются все остальные элементы для вызова кода."""
 
 
-figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
-                          "circle": "circle", "oval": "oval",
-                          "prism": "prism", "triangle_down": "triangle_down"}
-
-color_dict_for_n_back = {"white": (255, 255, 255), "red": (255, 0, 0), "green": (0, 255, 0), "blue": (0, 0, 255),
-                         "yellow": (225, 225, 0), "brown": (100, 50, 30), "black": (0, 0, 0), "orange": (255, 100, 25),
-                         "beige": (237, 211, 156)}
-
-dict_for_choose_color = {0: "white", 1: "red", 2: "green", 3: "blue", 4: "yellow",
-                         5: "brown", 6: "black", 7: "orange", 8: "beige"}
-
-picture_list = ["again", "good", "ura", "enter", "pause", "ball", "ball_face", "ball_on_tree",
-                "boy_musition", "bucket", "cat", "computer", "cop", "doctor", "duck",
-                "elza", "family", "fire_quard", "flower_2", "flower", "fridge", "frog",
-                "girl_painter", "good", "grandmother", "jam", "jerry", "lion", "man", "mouse",
-                "blank", "phone", "pig", "popcorn", "pot", "reader", "snake", "sun",
-                "teacher", "tree", "turtle", "warrior", "watermelon", "driver", "red_car",
-                "builder"]
-
-ru_letter_list_bl = ["А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л",
-                     "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш",
-                     "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"]
-
-eng_letter_list_bl = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-                      "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-                      "Y", "Z"]
-
-numbers_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+import checking_inputs
+import generator_git
+import analyzer
+import tkinter_module
 
 
-def show_stimulus_function(time_to_show_picture, line_of_stimulus):
-    # С начала получает время к показу, линию стимулов и тип словаря (хотя не очень ясно зачем)
-    # Потом нужно сделать вывод с периодикой — но период временной я умею делать через deepcopy
-    # А вот вывод картинок... Сделать стимульный ряд из картинок? ПОхоже, что это единственный вариант, ...
-    # Чтобы мозги не ебать.
+def main_function():
+    # Переменная для запуска цикла while.
+    switch = True
 
-    pygame.init()
+    """Вызывем интерфейс для ввода данных и работаем с этими данными."""
 
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    size = pygame.display.get_window_size()
-    length = size[0]
-    height = size[1]
+    list_from_tkinter = tkinter_module.func_window()
 
-    time_1 = time.monotonic()
-    time_2 = copy.deepcopy(time_1) + time_to_show_picture
-    clock = pygame.time.Clock()
+    print(list_from_tkinter)
 
-    num = 0
-    reaction = None
-    list_of_reactions = []
+    # Перегоняем выпадающие варианты словарей в численные значения.
+    tkinter_reviver = tkinter_module.recoder_for_logical_part(list_from_tkinter[0])
+    # Создаем переменные с чиловыми значениями для работы со словарями.
+    global_num_of_dict = tkinter_reviver[0]
+    type_of_letter = tkinter_reviver[1]
 
-    def fill_and_print_pictures():
-        if line_of_stimulus[0] in picture_list:
-            fon_fill = color_dict_for_n_back['beige']
+    # Сохраняем введенные значения.
+    global_count_of_stimulus = list_from_tkinter[1]
+    interval = list_from_tkinter[4]
+    stimulus_fin_list = list_from_tkinter[2]
+
+    # Сохраняем время к показу картинки.
+    time_to_show_picture = list_from_tkinter[3]
+
+    # Не понимаю почему не работает так,как надо, но со строчкой ниже все работает корректно.
+    global_count_of_stimulus = int(global_count_of_stimulus)
+
+    """Цикл для создания рядов, необходимых для видео ряда."""
+
+    chosen_stimulus = None
+    end_of_thinking = None
+    results_of_true_false = None
+
+    while switch is True:
+        if checking_inputs.checking_inputs_func(int(global_num_of_dict), int(global_count_of_stimulus),
+                                                int(interval), int(stimulus_fin_list), int(type_of_letter)) is True:
+
+            """Вызовы функций из модуля generator_git.py"""
+            # Функция может вернуть False и тогда программа сляжет.
+            chosen_stimulus = generator_git.n_back_choosing_stimulus(global_num_of_dict,
+                                                                     global_count_of_stimulus,
+                                                                     type_of_letter)
+            end_of_thinking = generator_git.mixer_stimulus(chosen_stimulus,
+                                                           global_count_of_stimulus,
+                                                           int(stimulus_fin_list))
+
+            """Вызовы функций из модуля analyzer.py"""
+            results_of_true_false = analyzer.working_code_reviev(end_of_thinking, interval)
+
+            """Вывод результатов, для понимания результатов работы программы."""
+            print(chosen_stimulus)
+            print(end_of_thinking)
+            print(results_of_true_false)
+            switch = False
+            return chosen_stimulus, end_of_thinking, results_of_true_false, time_to_show_picture
+
         else:
-            fon_fill = color_dict_for_n_back['white']
+            print("!")
+            switch = False
 
-        return fon_fill
+    """Ниже находится передача информации в pygame_module.py."""
 
-    def quit_func():
-        pygame.quit()
-        sys.exit()
-
-    def show_picture(name, color):
-        image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
-        image_show = pygame.transform.scale(image_show, [1024, 720])
-        image_size = image_show.get_size()
-        image_size_length = image_size[0]
-        image_size_height = image_size[1]
-        first_point = (length / 2) - (image_size_length / 2)
-        second_point = (height / 2) - (image_size_height / 2)
-        screen.blit(image_show, (first_point, second_point))
-
-        pygame.draw.rect(screen, color_dict_for_n_back['red'], [first_point + image_size_length - 10,
-                                         second_point - 10, 50, image_size_height + 30])
-        pygame.draw.rect(screen, color_dict_for_n_back['yellow'], [first_point - 10, second_point - 10, 50,
-                                         image_size_height + 20])
-        pygame.draw.rect(screen, color_dict_for_n_back['green'], [first_point - 10,
-                                         second_point + image_size_height - 10,
-                                         image_size_length + 20, 30])
-        pygame.draw.rect(screen, color_dict_for_n_back['blue'], [first_point - 10, second_point - 10,
-                                         image_size_length + 20, 30])
-
-    def line_of_remaining_time(time_step, time_mono_tick_1, time_mono_tick_2, color):
-        time_line = time_mono_tick_2 - time_mono_tick_1
-        pygame.draw.rect(screen, color_dict_for_n_back['black'], [length / 4, 5,
-                         (2 * (length / 4)), 15])
-        pygame.draw.rect(screen, color, [length / 4, 5,
-                         (2 * (length / 4)) / time_step * time_line, 15])
-
-    color_of_fon = fill_and_print_pictures()
-    screen.fill(color_of_fon)
-
-    while True:
-        time_1 = time.monotonic()
-
-        if time_1 > time_2 and num < len(line_of_stimulus):
-            screen.fill(color_of_fon)
-
-        if time_1 > time_2 + 1:
-            time_2 = copy.deepcopy(time_1) + time_to_show_picture
-
-            list_of_reactions.append(reaction)
-            reaction = False
-            # И тут мы начинаем что-то делать.
-            # Очевидно, что забацаю кучу функций, которые будут легко и просто выносится вне этого цикла, ...
-            # Чтобы не мозолить мне глаза.
-            if len(line_of_stimulus) > num:
-                show_picture(line_of_stimulus[num], color_of_fon)
-                num += 1
-            else:
-                print("Программа завершена.")
-                screen.fill(color_of_fon)
-                return list_of_reactions
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit_func()
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    quit_func()
-                if event.key == pygame.K_SPACE:
-                    reaction = True
-
-        line_of_remaining_time(time_to_show_picture, time_1, time_2, color_of_fon)
-        clock.tick(120)
-        pygame.display.update()
-
-
-list_a = ['A', 'B', 'A', 'B']
-a = show_stimulus_function(3, list_a)
-print(a)
+    # pygame_module.pict_and_react(time_to_show_picture, end_of_thinking, global_num_of_dict)

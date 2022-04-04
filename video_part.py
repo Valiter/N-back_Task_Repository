@@ -5,6 +5,7 @@ import copy
 import time
 import sys
 import os
+import smt
 
 
 figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
@@ -52,8 +53,10 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
 
     time_1 = time.monotonic()
     time_2 = copy.deepcopy(time_1) + time_to_show_picture
+    clock = pygame.time.Clock()
 
     num = 0
+    reaction = None
     list_of_reactions = []
 
     def fill_and_print_pictures():
@@ -107,6 +110,8 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
         if time_1 > time_2 + 1:
             time_2 = copy.deepcopy(time_1) + time_to_show_picture
 
+            list_of_reactions.append(reaction)
+            reaction = False
             # И тут мы начинаем что-то делать.
             # Очевидно, что забацаю кучу функций, которые будут легко и просто выносится вне этого цикла, ...
             # Чтобы не мозолить мне глаза.
@@ -126,12 +131,16 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
                 if event.key == pygame.K_ESCAPE:
                     quit_func()
                 if event.key == pygame.K_SPACE:
-                    pass
+                    reaction = True
 
         line_of_remaining_time(time_to_show_picture, time_1, time_2, color_of_fon)
+        clock.tick(120)
         pygame.display.update()
 
 
-list_a = ['A', 'B', 'A', 'B']
-a = show_stimulus_function(1, list_a)
-print(a)
+# list_a = ['A', 'B', 'A', 'B']
+# a = show_stimulus_function(3, list_a)
+# print(a)
+
+un_stimulus, end_line, true_false_results, time_to_show = smt.main_function()
+show_stimulus_function(str(time_to_show), end_line)
