@@ -131,17 +131,25 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     def get_pressed():
         pass
 
-    def change_stimulus(name, color_in):
-        image = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
-        screen.blit(image, ((length / 2) - 683, (height / 2) - 384))
-        pygame.draw.rect(screen, color_in,
-                         [length / 2 - 700, height / 2 - 400, length / 2 + 150, height / 2 - 690])
-        pygame.draw.rect(screen, color_in,
-                         [length / 2 - 700, height / 2 + 380, length / 2 + 150, height / 2 - 690])
-        pygame.draw.rect(screen, color_in,
-                         [length / 2 - 700, height / 2 - 400, 30, 800])
-        pygame.draw.rect(screen, color_in,
-                         [length / 2 + 680, height / 2 - 400, 30, 800])
+    def change_stimulus(name, color):
+        image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
+        image_show = pygame.transform.scale(image_show, [1024, 720])
+        image_size = image_show.get_size()
+        image_size_length = image_size[0]
+        image_size_height = image_size[1]
+        first_point = (length / 2) - (image_size_length / 2)
+        second_point = (height / 2) - (image_size_height / 2)
+        screen.blit(image_show, (first_point, second_point))
+
+        pygame.draw.rect(screen, color_dict_for_n_back['red'], [first_point + image_size_length - 10,
+                                                                second_point - 10, 50, image_size_height + 30])
+        pygame.draw.rect(screen, color_dict_for_n_back['yellow'], [first_point - 10, second_point - 10, 50,
+                                                                   image_size_height + 20])
+        pygame.draw.rect(screen, color_dict_for_n_back['green'], [first_point - 10,
+                                                                  second_point + image_size_height - 10,
+                                                                  image_size_length + 20, 30])
+        pygame.draw.rect(screen, color_dict_for_n_back['blue'], [first_point - 10, second_point - 10,
+                                                                 image_size_length + 20, 30])
 
     """Ниже находится цикл для обработки событий"""
 
