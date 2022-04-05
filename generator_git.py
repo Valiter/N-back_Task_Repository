@@ -132,7 +132,7 @@ def mixer_stimulus(line_of_stimulus, count_of_stimulus, line_of_lined_indexes=20
         index = line_of_stimulus.index(element)
         indexed_dictionary[index + 1] = [element]
 
-    stimulus_index_made = stimulus_index_maker(line_of_lined_indexes, count_of_stimulus)  # Использовать далее!
+    stimulus_index_made = stimulus_index_maker(line_of_lined_indexes, count_of_stimulus)
     end_list = []
     for element in stimulus_index_made:
         end_list.append(indexed_dictionary.get(element)[0])
