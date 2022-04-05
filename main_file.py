@@ -7,7 +7,7 @@ import checking_inputs
 import generator_git
 import analyzer
 import tkinter_module
-
+import pygame_module
 
 # Переменная для запуска цикла while.
 switch = True
@@ -73,4 +73,5 @@ while switch is True:
 
 """Ниже находится передача информации в pygame_module.py."""
 
-# pygame_module.pict_and_react(time_to_show_picture, end_of_thinking, global_num_of_dict)
+pygame_module.pict_and_react(time_to_show_picture, end_of_thinking, global_num_of_dict)
+print('\n', list_from_tkinter)

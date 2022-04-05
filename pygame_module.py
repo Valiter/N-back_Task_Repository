@@ -131,17 +131,16 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     def get_pressed():
         pass
 
-    def change_stimulus(name, color_3):
-        color_2 = color_dict_for_n_back(color_3)
+    def change_stimulus(name, color_in):
         image = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
         screen.blit(image, ((length / 2) - 683, (height / 2) - 384))
-        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
+        pygame.draw.rect(screen, color_in,
                          [length / 2 - 700, height / 2 - 400, length / 2 + 150, height / 2 - 690])
-        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
+        pygame.draw.rect(screen, color_in,
                          [length / 2 - 700, height / 2 + 380, length / 2 + 150, height / 2 - 690])
-        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
+        pygame.draw.rect(screen, color_in,
                          [length / 2 - 700, height / 2 - 400, 30, 800])
-        pygame.draw.rect(screen, color_dict_for_n_back[color_2],
+        pygame.draw.rect(screen, color_in,
                          [length / 2 + 680, height / 2 - 400, 30, 800])
 
     """Ниже находится цикл для обработки событий"""
@@ -149,7 +148,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     while True:
 
         start_time = time.monotonic()
-
+        time_for_showing = float(time_for_showing)
         if start_time > end_time + time_for_showing:
             screen.fill(color_dict_for_n_back['beige'])
 
@@ -185,4 +184,5 @@ list_a = ['pig', 'fridge', 'teacher',
           'fridge', 'fridge', 'fire_quard',
           'teacher', 'fire_quard', 'teacher', 'sun']
 
-pict_and_react(1, list_a, 6)
+
+#pict_and_react(1, list_a, 6)
