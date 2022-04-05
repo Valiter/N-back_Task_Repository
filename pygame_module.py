@@ -193,4 +193,4 @@ list_a = ['pig', 'fridge', 'teacher',
           'teacher', 'fire_quard', 'teacher', 'sun']
 
 
-#pict_and_react(1, list_a, 6)
+# pict_and_react(1, list_a, 6)
