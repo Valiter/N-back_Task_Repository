@@ -10,7 +10,7 @@ import checking_inputs
 import generator_git
 import analyzer
 import tkinter_module
-import smt
+import tester_1
 
 
 figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
@@ -147,5 +147,5 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
 # a = show_stimulus_function(3, list_a)
 # print(a)
 
-un_stimulus, end_line, true_false_results, time_to_show = smt.main_function()
+un_stimulus, end_line, true_false_results, time_to_show = tester_1.main_function()
 show_stimulus_function(str(time_to_show), end_line)
