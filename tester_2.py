@@ -143,9 +143,9 @@ def show_stimulus_function(time_to_show_picture, line_of_stimulus):
         pygame.display.update()
 
 
-# list_a = ['A', 'B', 'A', 'B']
-# a = show_stimulus_function(3, list_a)
-# print(a)
+list_a = ['A', 'B', 'A', 'B']
+a = show_stimulus_function(3, list_a)
+print(a)
 
-un_stimulus, end_line, true_false_results, time_to_show = tester_1.main_function()
-show_stimulus_function(str(time_to_show), end_line)
+# un_stimulus, end_line, true_false_results, time_to_show = tester_1.main_function()
+# show_stimulus_function(str(time_to_show), end_line)

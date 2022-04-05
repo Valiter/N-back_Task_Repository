@@ -65,6 +65,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
 
     #  Объявляем размер окна.
     screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+    # screen = pygame.display.set_mode((1024, 720))
     screen.fill(color_dict_for_n_back["beige"])
 
     #  Переменные связанные с размерами окна.
@@ -88,7 +89,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
 
     # Переменная для определения типа списка с картинками.
     type_of_pictures_and_stimulus = None
-    color = None
+    color = color_dict_for_n_back['white']
 
     # Русские буквы.
     if type_of_stimulus == 1:
@@ -131,7 +132,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     def get_pressed():
         pass
 
-    def change_stimulus(name, color):
+    def change_stimulus(name, color_in):
         image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
         image_show = pygame.transform.scale(image_show, [1024, 720])
         image_size = image_show.get_size()
@@ -185,12 +186,12 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         pygame.display.update()
 
 
-list_a = ['pig', 'fridge', 'teacher',
-          'teacher', 'pig', 'fridge',
-          'fridge', 'fridge', 'sun',
-          'sun', 'fridge', 'pig', 'pig',
-          'fridge', 'fridge', 'fire_quard',
-          'teacher', 'fire_quard', 'teacher', 'sun']
+# list_a = ['pig', 'fridge', 'teacher',
+#           'teacher', 'pig', 'fridge',
+#           'fridge', 'fridge', 'sun',
+#           'sun', 'fridge', 'pig', 'pig',
+#           'fridge', 'fridge', 'fire_quard',
+#           'teacher', 'fire_quard', 'teacher', 'sun']
 
 
 # pict_and_react(1, list_a, 6)

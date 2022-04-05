@@ -67,7 +67,7 @@ while switch is True:
         switch = False
 
     else:
-        print("!")
+        print("Error!")
         switch = False
 
 
