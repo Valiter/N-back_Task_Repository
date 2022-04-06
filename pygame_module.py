@@ -64,14 +64,18 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     """Ниже будут переменные и созданные события"""
 
     #  Объявляем размер окна.
-    screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-    # screen = pygame.display.set_mode((1024, 720))
-    screen.fill(color_dict_for_n_back["beige"])
+    screen_info = pygame.display.get_desktop_sizes()
+    length = screen_info[0][0]
+    height = screen_info[0][1]
+
+    screen = pygame.display.set_mode((length, height))
+    # screen = pygame.display.set_mode((2560, 1920))
+    screen.fill(color_dict_for_n_back["black"])
 
     #  Переменные связанные с размерами окна.
-    screen_info = pygame.display.get_window_size()
-    length = screen_info[0]
-    height = screen_info[1]
+    # screen_info = pygame.display.get_window_size()
+    # length = screen_info[0]
+    # height = screen_info[1]
 
     # Список, необходимый для запоминания нажатий.
     take_reaction = []
@@ -80,7 +84,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
 
     # Тут переменные связанные с временем.
     start_time = time.monotonic()
-    end_time = copy.deepcopy(start_time)
+    end_time = copy.deepcopy(start_time) + time_for_showing
 
     #  Созданные события.
     clock = pygame.time.Clock()
@@ -89,32 +93,32 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
 
     # Переменная для определения типа списка с картинками.
     type_of_pictures_and_stimulus = None
-    color = color_dict_for_n_back['white']
+    color = None
 
     # Русские буквы.
     if type_of_stimulus == 1:
         type_of_pictures_and_stimulus = ru_letter_list
-        color = None
+        color = color_dict_for_n_back['white']
     # Английские буквы.
     elif type_of_stimulus == 2:
         type_of_pictures_and_stimulus = eng_letter_list
-        color = None
+        color = color_dict_for_n_back['white']
     # Числа.
     elif type_of_stimulus == 3:
         type_of_pictures_and_stimulus = numbers_list
-        color = None
+        color = color_dict_for_n_back['white']
     # Фигуры.
     elif type_of_stimulus == 4:
         type_of_pictures_and_stimulus = figure_dict_for_n_back
-        color = None
+        color = color_dict_for_n_back['white']
     # Цвета.
     elif type_of_stimulus == 5:
         type_of_pictures_and_stimulus = color_dict_for_n_back
-        color = None
+        color = color_dict_for_n_back['white']
     # Картинки.
     elif type_of_stimulus == 6:
         type_of_pictures_and_stimulus = picture_list
-        color = ("beige")
+        color = color_dict_for_n_back['beige']
 
     """Ниже находятся функции"""
 
@@ -142,32 +146,35 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         second_point = (height / 2) - (image_size_height / 2)
         screen.blit(image_show, (first_point, second_point))
 
-        pygame.draw.rect(screen, color_dict_for_n_back['red'], [first_point + image_size_length - 10,
-                                                                second_point - 10, 50, image_size_height + 30])
-        pygame.draw.rect(screen, color_dict_for_n_back['yellow'], [first_point - 10, second_point - 10, 50,
-                                                                   image_size_height + 20])
-        pygame.draw.rect(screen, color_dict_for_n_back['green'], [first_point - 10,
-                                                                  second_point + image_size_height - 10,
-                                                                  image_size_length + 20, 30])
-        pygame.draw.rect(screen, color_dict_for_n_back['blue'], [first_point - 10, second_point - 10,
-                                                                 image_size_length + 20, 30])
+        pygame.draw.rect(screen, color_in, [first_point + image_size_length - 10,
+                         second_point - 10, 50, image_size_height + 30])
+        pygame.draw.rect(screen, color_in, [first_point - 10, second_point - 10, 50,
+                         image_size_height + 20])
+        pygame.draw.rect(screen, color_in, [first_point - 10,
+                         second_point + image_size_height - 10,
+                         image_size_length + 20, 30])
+        pygame.draw.rect(screen, color_in, [first_point - 10, second_point - 10,
+                         image_size_length + 20, 30])
 
+    """НЕ РАБОТАЕТ ПОЛОСКА ВРЕМЕНИ!!!!"""
+    def line_of_remaining_time(time_step, time_mono_tick_1, time_mono_tick_2, color_in):
+        time_line = time_mono_tick_2 - time_mono_tick_1
+        pygame.draw.rect(screen, color_dict_for_n_back['black'], [length / 4, 5,
+                         (2 * (length / 4)), 15])
+        pygame.draw.rect(screen, color_in, [length / 4, 5, (2 * (length / 4)) / time_step * time_line, 15])
     """Ниже находится цикл для обработки событий"""
 
     while True:
 
         start_time = time.monotonic()
-        time_for_showing = float(time_for_showing)
         if start_time > end_time + time_for_showing:
-            screen.fill(color_dict_for_n_back['beige'])
+            screen.fill(color)
 
         # В проверке ниже будет происходит замена картинок по истечению времени.
         if start_time > end_time + time_for_showing + 0.1:
+            end_time = copy.deepcopy(start_time) + time_for_showing
             if length_of_line_of_stimulus > index_num:
-                end_time = copy.deepcopy(start_time)
-
                 change_stimulus(gived_line_of_stimulus[index_num], color)
-
                 index_num += 1
             else:
                 print('Program is finished.')
@@ -183,15 +190,6 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
                 if event.key == pygame.K_SPACE:
                     get_pressed()
 
+        line_of_remaining_time(time_for_showing, start_time, end_time, color)
         pygame.display.update()
 
-
-# list_a = ['pig', 'fridge', 'teacher',
-#           'teacher', 'pig', 'fridge',
-#           'fridge', 'fridge', 'sun',
-#           'sun', 'fridge', 'pig', 'pig',
-#           'fridge', 'fridge', 'fire_quard',
-#           'teacher', 'fire_quard', 'teacher', 'sun']
-
-
-# pict_and_react(1, list_a, 6)

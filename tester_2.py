@@ -6,12 +6,6 @@ import time
 import sys
 import os
 
-import checking_inputs
-import generator_git
-import analyzer
-import tkinter_module
-import tester_1
-
 
 figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
                           "circle": "circle", "oval": "oval",

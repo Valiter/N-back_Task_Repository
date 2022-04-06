@@ -1,7 +1,6 @@
 from tkinter import*
 from tkinter import ttk
 from datetime import datetime  # for current date and time
-import pygame.display
 
 
 dict_student = None
@@ -62,14 +61,23 @@ def func_window():
         global interval_student
         global step_student
 
-        name_student = name.get()
-        date_student = date.get()
+        # name_student = name.get()
+        # date_student = date.get()
+        #
+        # dict_student = dictionary.get()
+        # number_of_elements_student = number_of_elements.get()
+        # length_student = length.get()
+        # interval_student = interval.get()
+        # step_student = step.get()
+
+        name_student = ''
+        date_student = ''
 
         dict_student = dictionary.get()
-        number_of_elements_student = number_of_elements.get()
-        length_student = length.get()
-        interval_student = interval.get()
-        step_student = step.get()
+        number_of_elements_student = '5'
+        length_student = '15'
+        interval_student = '1'
+        step_student = '1'
 
         #  Это(Строки 15-18 и 26) можно убрать, я просто попробовала без использования словаря записывать данные в файл
         #  expInfo = {'1. Испытуемый:':Name_student, '2. Дата рождения:':Date_student}
@@ -97,10 +105,12 @@ def func_window():
     window = Tk()
 
     # getting screen's height in pixels
-    height = window.winfo_screenheight()
+    # height = window.winfo_screenheight()
 
     # getting screen's width in pixels
-    width = window.winfo_screenwidth()
+    # width = window.winfo_screenwidth()
+    height = 720
+    width = 1080
 
     # window.attributes('-fullscreen', True)
     window.geometry('%dx%d' %(width, height))

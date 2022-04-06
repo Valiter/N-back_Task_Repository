@@ -32,7 +32,7 @@ interval = list_from_tkinter[4]
 stimulus_fin_list = list_from_tkinter[2]
 
 # Сохраняем время к показу картинки.
-time_to_show_picture = list_from_tkinter[3]
+time_to_show_picture = int(list_from_tkinter[3])
 
 # Не понимаю почему не работает так,как надо, но со строчкой ниже все работает корректно.
 global_count_of_stimulus = int(global_count_of_stimulus)
