@@ -55,7 +55,7 @@ numbers_list = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
 #      4) Стоит подумать над тем, что именно опрокидывать в функцию.
 
 
-def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
+def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, name, date):
 
     """Инициализируем pygame"""
 
@@ -134,6 +134,13 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         pygame.quit()
         sys.exit()
 
+    def writing(name_student, date_student, take_reaction_i):
+        log_file = name_student + '_' + date_student + '.txt'
+        results = open(log_file, 'a')
+        results.writelines(str(take_reaction_i))
+        results.write('\n')
+        results.close()
+
     def get_pressed(index, line, reaction_type):
         reaction_type = True
         index -= 1
@@ -179,10 +186,12 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                writing(name, date, take_reaction)
                 quit_func(take_reaction)
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
+                    writing(name, date, take_reaction)
                     quit_func(take_reaction)
                 if event.key == pygame.K_SPACE:
                     print("pr")
@@ -202,8 +211,8 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
                 reaction_added = False
             else:
                 print('Program is finished.')
+                writing(name, date, take_reaction)
                 quit_func(take_reaction)
 
         line_of_remaining_time(time_for_showing, start_time, end_time, color)
         pygame.display.update()
-

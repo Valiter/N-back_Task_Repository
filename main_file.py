@@ -34,6 +34,9 @@ stimulus_fin_list = list_from_tkinter[2]
 # Сохраняем время к показу картинки.
 time_to_show_picture = int(list_from_tkinter[3])
 
+name_student = list_from_tkinter[5]
+date_student = list_from_tkinter[6]
+
 # Не понимаю почему не работает так,как надо, но со строчкой ниже все работает корректно.
 global_count_of_stimulus = int(global_count_of_stimulus)
 
@@ -64,6 +67,17 @@ while switch is True:
         print(chosen_stimulus)
         print(end_of_thinking)
         print(results_of_true_false)
+
+        log_file = name_student + '_' + date_student + '.txt'
+        results = open(log_file, 'a')
+        results.writelines(chosen_stimulus)
+        results.write('\n', )
+        results.writelines(str(end_of_thinking))
+        results.write('\n', )
+        results.writelines(str(results_of_true_false))
+        results.write('\n', )
+        results.close()
+
         switch = False
 
     else:
@@ -73,5 +87,5 @@ while switch is True:
 
 """Ниже находится передача информации в pygame_module.py."""
 
-pygame_module.pict_and_react(time_to_show_picture, end_of_thinking, global_num_of_dict)
+pygame_module.pict_and_react(time_to_show_picture, end_of_thinking, global_num_of_dict, name_student, date_student)
 print('\n', list_from_tkinter)

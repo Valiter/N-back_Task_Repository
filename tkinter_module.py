@@ -9,6 +9,9 @@ length_student = None
 interval_student = None
 step_student = None
 
+name_student = None
+date_student = None
+
 
 def recoder_for_logical_part(string_to_recode):
     number_of_dictionary = None
@@ -61,6 +64,9 @@ def func_window():
         global interval_student
         global step_student
 
+        global name_student
+        global date_student
+
         # name_student = name.get()
         # date_student = date.get()
         #
@@ -70,8 +76,8 @@ def func_window():
         # interval_student = interval.get()
         # step_student = step.get()
 
-        name_student = ''
-        date_student = ''
+        name_student = 'x'
+        date_student = 'x'
 
         dict_student = dictionary.get()
         number_of_elements_student = '5'
@@ -79,23 +85,15 @@ def func_window():
         interval_student = '1'
         step_student = '1'
 
-        #  Это(Строки 15-18 и 26) можно убрать, я просто попробовала без использования словаря записывать данные в файл
-        #  expInfo = {'1. Испытуемый:':Name_student, '2. Дата рождения:':Date_student}
-        #  expInfo['4. Дата тестирования:'] = str(datetime.date(datetime.now()))  # add the current time
-        #  FileName = expInfo['1. Испытуемый:']+'_'+expInfo['4. Дата тестирования:']
-        #  LogFile = FileName + '.txt'
-
         #  Файл будет называться Имя_ДатаРождения, и при повторном прохождении теста одним человеком, ...
         #  ...данные вписываются в файл этого человека (мне кажется так сравнивать удобнее будет)...
         #  ... + файл записывается в ту же папку, где лежит программа
         log_file = name_student + '_' + date_student + '.txt'
         results = open(log_file, 'a')
-        results.write('Испытуемый\tДата рождения\tДата тестирования\tСловарь\tКол-во лементов\tДлина\tИнтервал\tШаг\n')
-        #  По сути строчку сверху можно убрать, она просто показывает какие данные хранятся в файле
 
         #  Results.write(expInfo['1. Испытуемый:']+'\t'+expInfo['2.
         #  Дата рождения:']+'\t'+expInfo['4. Дата тестирования:']+ '\n')
-        results.write(name_student + '\t' + date_student + '\t' + str(datetime.date(datetime.now())) + '\t' +
+        results.write(str(datetime.date(datetime.now())) + '\t' +
                       dict_student + '\t' + number_of_elements_student + '\t' + length_student + '\t' +
                       interval_student + '\t' + step_student + '\n')
         results.close()
@@ -185,4 +183,22 @@ def func_window():
 
     window.mainloop()
 
-    return dict_student, number_of_elements_student, length_student, interval_student, step_student
+    return dict_student, number_of_elements_student, length_student, interval_student, step_student, \
+        name_student, date_student
+
+
+"""ТУТ НАДО КАК-ТО СДЕЛАТЬ ЕЩЕ ОДНУ ЗАПИСЬ. ИЛИ НЕСКОЛЬКО!"""
+
+
+# def write_information_inside_file(name_student, date_student, dict_student,
+#                                   number_of_elements_student, length_student,
+#                                   interval_student, step_student):
+#     log_file = name_student + '_' + date_student + '.txt'
+#
+#     results = open(log_file, 'a')
+#     results.write(str(datetime.date(datetime.now())) + '\t' +
+#                   dict_student + '\t' + number_of_elements_student
+#                   + '\t' + length_student + '\t' +
+#                   interval_student + '\t' + step_student + '\n')
+#     results.close()
+#
