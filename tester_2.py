@@ -1,11 +1,21 @@
 
 
+"""Тесты"""
+
+
 import pygame
 import copy
 import time
 import sys
 import os
 
+#
+#
+#
+#
+#
+#
+#
 
 figure_dict_for_n_back = {"triangle_up": "triangle_up", "square": "square",
                           "circle": "circle", "oval": "oval",

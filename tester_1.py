@@ -1,6 +1,6 @@
 
 
-""" Тесты"""
+"""Тесты"""
 
 
 import checking_inputs

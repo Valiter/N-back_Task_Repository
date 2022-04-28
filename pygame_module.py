@@ -81,6 +81,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     take_reaction = []
     index_num = 0
     length_of_line_of_stimulus = len(gived_line_of_stimulus)
+    reaction_added = False
 
     # Тут переменные связанные с временем.
     start_time = time.monotonic()
@@ -95,6 +96,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
     type_of_pictures_and_stimulus = None
     color = None
 
+    # Это очень корявый способ работы для программы.
     # Русские буквы.
     if type_of_stimulus == 1:
         type_of_pictures_and_stimulus = ru_letter_list
@@ -120,21 +122,24 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         type_of_pictures_and_stimulus = picture_list
         color = color_dict_for_n_back['beige']
 
+    # Тут мы создаем ПУСТОЙ список с необходимой нам длиной.
+    while len(take_reaction) < length_of_line_of_stimulus:
+        take_reaction.append(False)
+
     """Ниже находятся функции"""
 
     #  Функция выхода из программы.
-    def quit_func():
+    def quit_func(reaction):
+        print(reaction)
         pygame.quit()
         sys.exit()
 
-    def check_type(needed_to_check):
-        if type(needed_to_check) is dict:
-            return 2
-        if type(needed_to_check) is list:
-            return 1
-
-    def get_pressed():
-        pass
+    def get_pressed(index, line, reaction_type):
+        reaction_type = True
+        index -= 1
+        print(index)
+        line.insert(index, True)
+        return reaction_type, line
 
     def change_stimulus(name, color_in):
         image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
@@ -142,8 +147,10 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         image_size = image_show.get_size()
         image_size_length = image_size[0]
         image_size_height = image_size[1]
+
         first_point = (length / 2) - (image_size_length / 2)
         second_point = (height / 2) - (image_size_height / 2)
+
         screen.blit(image_show, (first_point, second_point))
 
         pygame.draw.rect(screen, color_in, [first_point + image_size_length - 10,
@@ -170,25 +177,32 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus):
         if start_time > end_time + time_for_showing:
             screen.fill(color)
 
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                quit_func(take_reaction)
+
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    quit_func(take_reaction)
+                if event.key == pygame.K_SPACE:
+                    print("pr")
+                    if reaction_added is False:
+                        print(index_num)
+                        reaction_added, take_reaction = get_pressed(index_num, take_reaction, reaction_added)
+                        print(index_num, 'key')
+                    print(take_reaction)
+
         # В проверке ниже будет происходит замена картинок по истечению времени.
         if start_time > end_time + time_for_showing + 0.1:
             end_time = copy.deepcopy(start_time) + time_for_showing
             if length_of_line_of_stimulus > index_num:
                 change_stimulus(gived_line_of_stimulus[index_num], color)
                 index_num += 1
+                print(index_num, 'pict')
+                reaction_added = False
             else:
                 print('Program is finished.')
-                quit_func()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                quit_func()
-
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    quit_func()
-                if event.key == pygame.K_SPACE:
-                    get_pressed()
+                quit_func(take_reaction)
 
         line_of_remaining_time(time_for_showing, start_time, end_time, color)
         pygame.display.update()
