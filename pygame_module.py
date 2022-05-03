@@ -136,7 +136,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
 
     def writing(name_student, date_student, take_reaction_i):
         log_file = name_student + '_' + date_student + '.txt'
-        results = open(log_file, 'a')
+        results = open('.//results//' + log_file, 'a')
         results.writelines(str(take_reaction_i))
         results.write('\n')
         results.close()
@@ -149,7 +149,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
         return reaction_type, line
 
     def change_stimulus(name, color_in):
-        image_show = pygame.image.load(os.path.join("stimuli_img", name + '.png'))
+        image_show = pygame.image.load(os.path.join("stimuli_img", str(name) + '.png'))
         image_show = pygame.transform.scale(image_show, [1024, 720])
         image_size = image_show.get_size()
         image_size_length = image_size[0]
@@ -214,5 +214,5 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
                 writing(name, date, take_reaction)
                 quit_func(take_reaction)
 
-        line_of_remaining_time(time_for_showing, start_time, end_time, color)
+        line_of_remaining_time(time_for_showing, start_time, end_time + time_for_showing + 0.1, color)
         pygame.display.update()

@@ -69,8 +69,8 @@ while switch is True:
         print(results_of_true_false)
 
         log_file = name_student + '_' + date_student + '.txt'
-        results = open(log_file, 'a')
-        results.writelines(chosen_stimulus)
+        results = open('.//results//' + log_file, 'a')
+        results.writelines(str(chosen_stimulus))
         results.write('\n', )
         results.writelines(str(end_of_thinking))
         results.write('\n', )

@@ -1,3 +1,3 @@
-ln = [True, True, True, True, True, True, True, True, True, True, True, True, True, True, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, True, False]
+from datetime import datetime
 
-print(len(ln))
+print(datetime.today().strftime("%Y/%m/%d"))
