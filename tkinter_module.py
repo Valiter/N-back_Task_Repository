@@ -112,13 +112,13 @@ def func_window():
         # !! еще я поменяла дату в записи файла, но мне каж можно оставить как было до этого
         if var_student == 1:
             number_of_elements_student = '5'
-            length_student = '30'
-            interval_student = '3'
-            step_student = '1'
+            length_student = '20'
+            interval_student = '0.5'
+            step_student = '0'
             dict_student = 'Numbers'
         elif var_student == 2:
             number_of_elements_student = '5'
-            length_student = '15'
+            length_student = '60'
             interval_student = '1'
             step_student = '3'
             dict_student = 'Eng UPPERCASE'
@@ -127,7 +127,7 @@ def func_window():
             length_student = '15'
             interval_student = '1'
             step_student = '1'
-            dict_student = 'Rus lowercase'
+            dict_student = 'Pictures'
         else:
             number_of_elements_student = '0'
             length_student = '0'

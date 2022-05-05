@@ -32,7 +32,7 @@ interval = list_from_tkinter[4]
 stimulus_fin_list = list_from_tkinter[2]
 
 # Сохраняем время к показу картинки.
-time_to_show_picture = int(list_from_tkinter[3])
+time_to_show_picture = float(list_from_tkinter[3])
 
 name_student = list_from_tkinter[5]
 date_student = list_from_tkinter[6]
