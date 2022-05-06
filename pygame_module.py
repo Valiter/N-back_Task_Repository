@@ -83,10 +83,6 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
     length_of_line_of_stimulus = len(gived_line_of_stimulus)
     reaction_added = False
 
-    # Тут переменные связанные с временем.
-    start_time = time.monotonic()
-    end_time = copy.deepcopy(start_time) + time_for_showing
-
     #  Созданные события.
     clock = pygame.time.Clock()
 
@@ -178,10 +174,14 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
         pygame.draw.rect(screen, color_in, [length / 4, 5, (2 * (length / 4)) / time_step * time_line, 15])
     """Ниже находится цикл для обработки событий"""
 
+    # Тут переменные связанные с временем.
+    start_time = time.monotonic()
+    end_time = copy.deepcopy(start_time) + time_for_showing
+
     while True:
 
         start_time = time.monotonic()
-        if start_time > end_time + time_for_showing:
+        if start_time > end_time:
             screen.fill(color)
 
         for event in pygame.event.get():
@@ -202,7 +202,7 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
                     print(take_reaction)
 
         # В проверке ниже будет происходит замена картинок по истечению времени.
-        if start_time > end_time + time_for_showing + 0.1:
+        if start_time > end_time + 0.1:
             end_time = copy.deepcopy(start_time) + time_for_showing
             if length_of_line_of_stimulus > index_num:
                 change_stimulus(gived_line_of_stimulus[index_num], color)
@@ -214,5 +214,5 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
                 writing(name, date, take_reaction)
                 quit_func(take_reaction)
 
-        line_of_remaining_time(time_for_showing, start_time, end_time + time_for_showing + 0.1, color)
+        line_of_remaining_time(time_for_showing, start_time, end_time + 0.1, color)
         pygame.display.update()

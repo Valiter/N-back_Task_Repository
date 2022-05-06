@@ -6,7 +6,7 @@ from datetime import datetime  # for current date and time
 dict_student = None
 number_of_elements_student = None
 length_student = None
-interval_student = None
+interval_of_time = None
 step_student = None
 
 name_student = None
@@ -87,7 +87,7 @@ def func_window():
     global dict_student
     global number_of_elements_student
     global length_student
-    global interval_student
+    global interval_of_time
     global step_student
 
     def get_data():
@@ -96,15 +96,15 @@ def func_window():
         global number_of_elements_student
         global length_student
         # Время к показу
-        global interval_student
+        global interval_of_time
         # Шаг N-back
         global step_student
 
         global name_student
         global date_student
 
-        name_student = 'x'
-        date_student = 'x'
+        name_student = name.get()
+        date_student = date.get()
         var_student = var.get()
         # dict_student = dictionary.get()
 
@@ -112,26 +112,32 @@ def func_window():
         # !! еще я поменяла дату в записи файла, но мне каж можно оставить как было до этого
         if var_student == 1:
             number_of_elements_student = '5'
-            length_student = '20'
-            interval_student = '0.5'
+            length_student = '60'
+            interval_of_time = '2'
             step_student = '0'
-            dict_student = 'Numbers'
+            dict_student = 'Rus UPPERCASE'
         elif var_student == 2:
             number_of_elements_student = '5'
             length_student = '60'
-            interval_student = '1'
-            step_student = '3'
-            dict_student = 'Eng UPPERCASE'
+            interval_of_time = '2'
+            step_student = '1'
+            dict_student = 'Rus UPPERCASE'
         elif var_student == 3:
             number_of_elements_student = '5'
-            length_student = '15'
-            interval_student = '1'
-            step_student = '1'
-            dict_student = 'Pictures'
+            length_student = '60'
+            interval_of_time = '2'
+            step_student = '2'
+            dict_student = 'Rus UPPERCASE'
+        elif var_student == 4:
+            number_of_elements_student = '5'
+            length_student = '60'
+            interval_of_time = '2'
+            step_student = '3'
+            dict_student = 'Rus UPPERCASE'
         else:
             number_of_elements_student = '0'
             length_student = '0'
-            interval_student = '0'
+            interval_of_time = '0'
             step_student = '0'
             dict_student = 'Figures'
 
@@ -143,9 +149,10 @@ def func_window():
 
         #  Results.write(expInfo['1. Испытуемый:']+'\t'+expInfo['2.
         #  Дата рождения:']+'\t'+expInfo['4. Дата тестирования:']+ '\n')
-        results.write(datetime.today().strftime("%Y/%m/%d") + '\t' +
-                      dict_student + '\t' + number_of_elements_student + '\t' + length_student + '\t' +
-                      interval_student + '\t' + step_student + '\n')
+        results.write('\n' + datetime.today().strftime("%Y/%m/%d") + '\t' + "Тип словаря: " +
+                      dict_student + '\t' + "Количество уникальных элементов: " + number_of_elements_student + '\t' +
+                      "Количество эл. в ряду: " + length_student + '\t' + "Время к показу: " +
+                      interval_of_time + '\t' + "Шаг N-back: " + step_student + '\n')
         results.close()
         window.destroy()
 
@@ -226,12 +233,14 @@ def func_window():
     # сами радиокнопки
     # изменить подпись к шаблону можно в поле текст
     var = IntVar()
-    rbutton1 = Radiobutton(window, text='1', variable=var, value=1)
-    rbutton2 = Radiobutton(window, text='2', variable=var, value=2)
-    rbutton3 = Radiobutton(window, text='3', variable=var, value=3)
+    rbutton1 = Radiobutton(window, text='0', variable=var, value=1)
+    rbutton2 = Radiobutton(window, text='1', variable=var, value=2)
+    rbutton3 = Radiobutton(window, text='2', variable=var, value=3)
+    rbutton4 = Radiobutton(window, text='3', variable=var, value=4)
     rbutton1.place(relx=.6, rely=.35, anchor='c')
     rbutton2.place(relx=.6, rely=.4, anchor='c')
     rbutton3.place(relx=.6, rely=.45, anchor='c')
+    rbutton4.place(relx=.6, rely=.5, anchor='c')
 
     #  Кнопка для перехода к тесту
     #  Gри нажатии кнопки происходит запись данных в файл и закрытие окна
@@ -240,5 +249,5 @@ def func_window():
 
     window.mainloop()
 
-    return dict_student, number_of_elements_student, length_student, interval_student, step_student, \
+    return dict_student, number_of_elements_student, length_student, interval_of_time, step_student, \
            name_student, date_student
