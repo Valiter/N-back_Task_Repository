@@ -77,7 +77,7 @@ def file_reader(name):
 
     res_count = 0
     start = 6
-    while start < length_of_file + 1:
+    while start < length_of_file:
         readed_from_file.pop(start)
         readed_from_file.insert(start, str(results_list[res_count]) + "\n")
         res_count += 1
