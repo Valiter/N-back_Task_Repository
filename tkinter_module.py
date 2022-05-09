@@ -95,6 +95,7 @@ def func_window():
         global dict_student
         global number_of_elements_student
         global length_student
+
         # Время к показу
         global interval_of_time
         # Шаг N-back
@@ -113,33 +114,33 @@ def func_window():
         if var_student == 1:
             number_of_elements_student = '5'
             length_student = '60'
-            interval_of_time = '2'
+            interval_of_time = '3'
             step_student = '0'
             dict_student = 'Rus UPPERCASE'
         elif var_student == 2:
             number_of_elements_student = '5'
             length_student = '60'
-            interval_of_time = '2'
+            interval_of_time = '3'
             step_student = '1'
             dict_student = 'Rus UPPERCASE'
         elif var_student == 3:
             number_of_elements_student = '5'
             length_student = '60'
-            interval_of_time = '2'
+            interval_of_time = '3'
             step_student = '2'
             dict_student = 'Rus UPPERCASE'
         elif var_student == 4:
             number_of_elements_student = '5'
             length_student = '60'
-            interval_of_time = '2'
+            interval_of_time = '3'
             step_student = '3'
             dict_student = 'Rus UPPERCASE'
         else:
-            number_of_elements_student = '0'
-            length_student = '0'
-            interval_of_time = '0'
-            step_student = '0'
-            dict_student = 'Figures'
+            number_of_elements_student = None
+            length_student = None
+            interval_of_time = None
+            step_student = None
+            dict_student = None
 
         #  Файл будет называться Имя_ДатаРождения, и при повторном прохождении теста одним человеком, ...
         #  ...данные вписываются в файл этого человека (мне кажется так сравнивать удобнее будет)...

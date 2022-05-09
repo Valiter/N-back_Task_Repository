@@ -47,38 +47,55 @@ chosen_stimulus = None
 end_of_thinking = None
 results_of_true_false = None
 
+
+def n_back_choosing_stimulus(num_dict, global_count, type_of_letter_in_func):
+    res = generator_git.n_back_choosing_stimulus(num_dict, global_count, type_of_letter_in_func)
+    return res
+
+
+def mixer_stimulus_f(chosen_stimulus_2,
+                     global_count_of_stimulus_2,
+                     stimulus_fin_list_2):
+    res = generator_git.mixer_stimulus(chosen_stimulus_2,
+                                       global_count_of_stimulus_2,
+                                       int(stimulus_fin_list_2))
+    return res
+
+
 while switch is True:
     if checking_inputs.checking_inputs_func(int(global_num_of_dict), int(global_count_of_stimulus),
                                             int(interval), int(stimulus_fin_list), int(type_of_letter)) is True:
 
         """Вызовы функций из модуля generator_git.py"""
         # Функция может вернуть False и тогда программа сляжет.
-        chosen_stimulus = generator_git.n_back_choosing_stimulus(global_num_of_dict,
-                                                                 global_count_of_stimulus,
-                                                                 type_of_letter)
-        end_of_thinking = generator_git.mixer_stimulus(chosen_stimulus,
-                                                       global_count_of_stimulus,
-                                                       int(stimulus_fin_list))
+        chosen_stimulus = n_back_choosing_stimulus(global_num_of_dict,
+                                                   global_count_of_stimulus,
+                                                   type_of_letter)
+        end_of_thinking = mixer_stimulus_f(chosen_stimulus,
+                                           global_count_of_stimulus,
+                                           stimulus_fin_list)
 
         """Вызовы функций из модуля analyzer.py"""
         results_of_true_false = analyzer.working_code_reviev(end_of_thinking, interval)
 
-        """Вывод результатов, для понимания результатов работы программы."""
-        print(chosen_stimulus)
-        print(end_of_thinking)
-        print(results_of_true_false)
+        if results_of_true_false.count(True) > 11:
+            # Сколько надо — столько и сделаем... Главное понимать сколько нужно стимулов минимум.
+            """Вывод результатов, для понимания результатов работы программы."""
+            print(chosen_stimulus)
+            print(end_of_thinking)
+            print(results_of_true_false)
 
-        log_file = name_student + '_' + date_student + '.txt'
-        results = open('.//results//' + log_file, 'a')
-        results.writelines(str(chosen_stimulus))
-        results.write('\n', )
-        results.writelines(str(end_of_thinking))
-        results.write('\n', )
-        results.writelines(str(results_of_true_false))
-        results.write('\n', )
-        results.close()
+            log_file = name_student + '_' + date_student + '.txt'
+            results = open('.//results//' + log_file, 'a')
+            results.writelines(str(chosen_stimulus))
+            results.write('\n', )
+            results.writelines(str(end_of_thinking))
+            results.write('\n', )
+            results.writelines(str(results_of_true_false))
+            results.write('\n', )
+            results.close()
 
-        switch = False
+            switch = False
 
     else:
         print("Error!")
