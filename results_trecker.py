@@ -39,6 +39,8 @@ def file_reader(name):
                 if line_1[circle_two] is True:
                     if line_1[circle_two] == line_2[circle_two]:
                         greats_count += 1
+                    if line_2[circle_two] is False:
+                        mistakes_count += 1
                 elif line_1[circle_two] is None:
                     if line_2[circle_two] is True:
                         mistakes_count += 1
