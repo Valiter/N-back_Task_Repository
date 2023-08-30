@@ -1,11 +1,11 @@
-
+import os
 
 """Анализ данных и перезапись файлов."""
 
 
 def file_reader(name):
 
-    def rebuildding_lists_function(data):
+    def rebuilding_lists_function(data):
         list_rlf = []
         for element in data:
             if element == "F":
@@ -24,8 +24,8 @@ def file_reader(name):
         circle = 0
         ln = len(ready)
         while circle < ln:
-            line_1 = rebuildding_lists_function(ready[circle])
-            line_2 = rebuildding_lists_function(reacted[circle])
+            line_1 = rebuilding_lists_function(ready[circle])
+            line_2 = rebuilding_lists_function(reacted[circle])
             true_1_count = line_1.count(True)
             true_2_count = line_2.count(True)
             ln_w = len(line_1)
@@ -60,9 +60,11 @@ def file_reader(name):
             circle += 1
         return res
 
-    file = open('.//results//' + name + '.txt', 'r')
+    file_a = open('.//results//' + name + 'txt', 'r')
 
-    readed_from_file = file.readlines()
+    readed_from_file = file_a.readlines()
+
+    readed_from_file.append("\n")
 
     length_of_file = len(readed_from_file)
     # Переработанная программой информация на совпадения в ряду
@@ -70,12 +72,12 @@ def file_reader(name):
     # Реакции испытуемого на ряд
     react = readed_from_file[5::6]
 
-    # Текст результатов, которые мы получили псле обработки.
+    # Текст результатов, которые мы получили после обработки.
     results_list = analyze(reworked, react)
 
-    file.close()
+    file_a.close()
 
-    file = open('.//results//' + name + '_reforged.txt', 'w')
+    file_b = open('.//results//' + name + '_reforged.txt', 'w')
 
     res_count = 0
     start = 6
@@ -85,9 +87,25 @@ def file_reader(name):
         res_count += 1
         start += 6
 
-    file.writelines(readed_from_file)
+    file_b.writelines(readed_from_file)
 
-    file.close()
+    file_b.close()
 
 
-file_reader(input("Введите название файла: "))
+def results_trecker():
+    content = os.listdir('.//results')
+    print(content)
+
+    for el in content:
+        ln = len(el)
+        file_ending = el[::-1]
+
+        if file_ending[:3:] == "txt":
+            name = el[:(ln - 3):]
+            file_reader(name)
+        else:
+            print(el + " — This file is not in .txt format!")
+
+
+# file_reader(input("Введите название файла: "))
+results_trecker()

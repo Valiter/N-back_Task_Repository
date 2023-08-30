@@ -216,3 +216,6 @@ def pict_and_react(time_for_showing, gived_line_of_stimulus, type_of_stimulus, n
 
         line_of_remaining_time(time_for_showing, start_time, end_time + 0.1, color)
         pygame.display.update()
+
+    # # ЗАПУСТИТЬ tkinter
+    # main_file_circle.main_func()
